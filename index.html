@@ -49,22 +49,22 @@
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Имя и Фамилия</label>
+          <label for="regName" class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Имя и Фамилия</label>
           <input type="text" id="regName" placeholder="Например, Алан Тьюринг" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none text-sm transition font-medium">
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Желаемая специальность</label>
+          <label for="regMajor" class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Желаемая специальность</label>
           <input type="text" id="regMajor" placeholder="Computer Science, Economics, etc." required value="Computer Science" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none text-sm transition font-medium">
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">GPA (max 4.0)</label>
+            <label for="regGPA" class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">GPA (max 4.0)</label>
             <input type="number" step="0.01" max="4.0" min="0" id="regGPA" value="3.8" required class="w-full px-3 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none text-sm font-semibold">
           </div>
           <div>
-            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">IELTS Балл</label>
+            <label for="regIELTS" class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">IELTS Балл</label>
             <input type="number" step="0.5" max="9.0" min="0" id="regIELTS" value="7.0" required class="w-full px-3 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none text-sm font-semibold">
           </div>
         </div>
@@ -161,7 +161,7 @@
               </div>
 
               <!-- Поиск/Фильтр -->
-              <input type="text" id="uniSearchInput" oninput="filterUniversities()" placeholder="Поиск ВУЗа..." class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:ring-2 focus:ring-indigo-500">
+              <input type="text" id="uniSearchInput" aria-label="Поиск ВУЗа" oninput="filterUniversities()" placeholder="Поиск ВУЗа..." class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:ring-2 focus:ring-indigo-500">
             </div>
 
             <div id="universityList" class="space-y-3">
@@ -301,7 +301,7 @@
               
               <!-- Поле Ввода -->
               <div class="flex items-center space-x-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
-                <input type="text" id="chatInput" placeholder="Спроси о ВУЗах, эссе или курсах..." class="flex-1 px-3 py-1.5 bg-transparent border-none text-xs outline-none text-slate-800 font-medium" onkeypress="handleEnter(event)">
+                <input type="text" id="chatInput" aria-label="Сообщение для ИИ-консультанта" placeholder="Спроси о ВУЗах, эссе или курсах..." class="flex-1 px-3 py-1.5 bg-transparent border-none text-xs outline-none text-slate-800 font-medium" onkeypress="handleEnter(event)">
                 <button onclick="processInput()" class="p-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-md transition active:scale-95">
                   <i data-lucide="send" class="w-4 h-4"></i>
                 </button>
