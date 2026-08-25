@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #f1f5f9;
+  color: #0f172a;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar { width: 5px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+
+.avatar-option { transition: all 0.2s ease; cursor: pointer; }
+.avatar-option:hover { transform: scale(1.05); }
+.avatar-option.selected {
+  outline: 3px solid #6366f1;
+  outline-offset: 2px;
+  transform: scale(1.1);
+  background-color: #e0e7ff;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
