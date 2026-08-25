@@ -300,7 +300,7 @@ async function sendUserMessage(text) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
         message: text,
-        userContext: user 
+        userContext: { name: user.name, major: user.major, gpa: user.gpa, ielts: user.ielts }
       })
     });
     
