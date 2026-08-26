@@ -22,48 +22,6 @@ function setMobileNavActive(el) {
   el.classList.add('bg-white', 'shadow-sm', 'text-indigo-600');
 }
 
-/* ==================== ПЕРЕКЛЮЧЕНИЕ ТЕМЫ (с анимацией) ==================== */
-function toggleTheme(event) {
-  const root = document.documentElement;
-  const isDark = root.classList.contains('dark-theme');
-
-  const x = event.clientX;
-  const y = event.clientY;
-  const endRadius = Math.hypot(
-    Math.max(x, window.innerWidth - x),
-    Math.max(y, window.innerHeight - y)
-  );
-
-  const applyTheme = () => {
-    root.classList.toggle('dark-theme');
-    localStorage.setItem('unipath_theme', isDark ? 'light' : 'dark');
-  };
-
-  // Если браузер не поддерживает View Transitions API — просто переключаем без анимации
-  if (!document.startViewTransition) {
-    applyTheme();
-    return;
-  }
-
-  const transition = document.startViewTransition(() => applyTheme());
-
-  transition.ready.then(() => {
-    root.animate(
-      {
-        clipPath: [
-          `circle(0px at ${x}px ${y}px)`,
-          `circle(${endRadius}px at ${x}px ${y}px)`
-        ]
-      },
-      {
-        duration: 650,
-        easing: 'ease-in-out',
-        pseudoElement: '::view-transition-new(root)'
-      }
-    );
-  });
-}
-
 const RAW_UNIVERSITIES = [
   { name: 'Harvard University', logo: './image/harvard.png' },
   { name: 'Stanford University', logo: './image/stanford.svg' },
