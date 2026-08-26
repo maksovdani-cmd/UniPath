@@ -4,7 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>UniPath AI - Платформа Поступления 2026</title>
+  <script>
+    if (localStorage.getItem('unipath_theme') === 'dark') {
+      document.documentElement.classList.add('dark-theme');
+    }
+  </script>
   <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="stylesheet" href="style.css">
@@ -121,13 +127,19 @@
           <span class="w-2 h-2 rounded-full bg-indigo-500 animate-ping"></span>
           <span>Аналитика обновлена под требования 2026</span>
         </div>
-        <button onclick="openEditProfile()" class="flex items-center space-x-3 bg-white p-1.5 pr-4 border border-slate-200 rounded-full hover:shadow-md transition">
-          <img id="headerUserAvatar" src="" class="w-8 h-8 rounded-full object-cover border border-indigo-200" alt="Avatar">
-          <div class="text-left leading-tight hidden sm:block">
-            <span id="headerUserName" class="text-xs font-bold text-slate-900 block">Студент</span>
-            <span id="headerUserMajor" class="text-[10px] text-slate-400 font-medium">CS Major</span>
-          </div>
-        </button>
+        <div class="flex items-center space-x-2 shrink-0">
+          <button id="themeToggleBtn" onclick="toggleTheme(event)" aria-label="Переключить тему" class="flex items-center justify-center w-9 h-9 bg-white border border-slate-200 rounded-full hover:shadow-md transition shrink-0">
+            <i data-lucide="moon" class="theme-icon-moon w-4 h-4 text-slate-600"></i>
+            <i data-lucide="sun" class="theme-icon-sun w-4 h-4 text-amber-400"></i>
+          </button>
+          <button onclick="openEditProfile()" class="flex items-center space-x-3 bg-white p-1.5 pr-4 border border-slate-200 rounded-full hover:shadow-md transition">
+            <img id="headerUserAvatar" src="" class="w-8 h-8 rounded-full object-cover border border-indigo-200" alt="Avatar">
+            <div class="text-left leading-tight hidden sm:block">
+              <span id="headerUserName" class="text-xs font-bold text-slate-900 block">Студент</span>
+              <span id="headerUserMajor" class="text-[10px] text-slate-400 font-medium">CS Major</span>
+            </div>
+          </button>
+        </div>
       </header>
 
       <!-- Главный Баннер -->
