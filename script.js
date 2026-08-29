@@ -11,6 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('mainApp').classList.remove('hidden');
     updateUI();
   }
+
+  // Инициализация переключателя языка (восстановление сохраненного выбора)
+  const savedLang = localStorage.getItem('unipath_lang') || 'ru';
+  const langLabel = document.getElementById('langToggleLabel');
+  if (langLabel) langLabel.innerText = savedLang.toUpperCase();
 });
 
 function setMobileNavActive(el) {
@@ -23,7 +28,12 @@ function setMobileNavActive(el) {
 }
 
 /* ==================== ПЕРЕКЛЮЧЕНИЕ ТЕМЫ (с анимацией) ==================== */
+let themeAnimating = false;
+
 function toggleTheme() {
+  if (themeAnimating) return;
+  themeAnimating = true;
+
   const root = document.documentElement;
   const isDark = root.classList.contains('dark-theme');
 
@@ -35,6 +45,8 @@ function toggleTheme() {
   }
 
   overlay.style.backgroundColor = isDark ? '#f1f5f9' : '#0b1120';
+  overlay.classList.remove('expand');
+  void overlay.offsetWidth; // форсируем сброс анимации перед повторным запуском
 
   requestAnimationFrame(() => {
     overlay.classList.add('expand');
@@ -48,6 +60,19 @@ function toggleTheme() {
   setTimeout(() => {
     overlay.classList.remove('expand');
   }, 650);
+
+  setTimeout(() => {
+    themeAnimating = false;
+  }, 950);
+}
+
+/* ==================== ПЕРЕКЛЮЧЕНИЕ ЯЗЫКА ==================== */
+function toggleLanguage() {
+  const label = document.getElementById('langToggleLabel');
+  const current = localStorage.getItem('unipath_lang') || 'ru';
+  const next = current === 'ru' ? 'en' : 'ru';
+  localStorage.setItem('unipath_lang', next);
+  if (label) label.innerText = next.toUpperCase();
 }
 
 const RAW_UNIVERSITIES = [
