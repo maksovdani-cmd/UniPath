@@ -1,3 +1,50 @@
+// ==================== СЛОВАРЬ ПЕРЕВОДОВ ====================
+const translations = {
+  en: {
+    "nav_home": "Dashboard",
+    "nav_unis": "Universities & Chances",
+    "nav_resources": "Resources & Lessons",
+    "nav_checklist": "Checklist 2026",
+    "nav_logout": "Switch Profile",
+    "search_ph": "Search University...",
+    "title_unis": "Universities & Chances Match",
+    "title_resources": "Lessons & Free Resources",
+    "title_checklist": "Preparation Plan (Checklist)",
+    "bot_ph": "Ask about universities, essays or courses...",
+    "bot_title": "UniBot Mentor AI",
+    "bot_subtitle": "Admission Consultant"
+  },
+  ru: {
+    "nav_home": "Главная",
+    "nav_unis": "ВУЗы и Шансы",
+    "nav_resources": "База и Уроки",
+    "nav_checklist": "Чек-лист 2026",
+    "nav_logout": "Сменить Профиль",
+    "search_ph": "Поиск ВУЗа...",
+    "title_unis": "Подборка ВУЗов и Расчет Шансов",
+    "title_resources": "Уроки и Бесплатные Ресурсы",
+    "title_checklist": "План подготовки (Checklist 2026)",
+    "bot_ph": "Спроси о ВУЗах, эссе или курсах...",
+    "bot_title": "UniBot Mentor AI",
+    "bot_subtitle": "Консультант по поступившим"
+  }
+};
+
+function applyLanguage(lang) {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.innerText = translations[lang][key];
+    }
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if (translations[lang] && translations[lang][key]) {
+      el.placeholder = translations[lang][key];
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   lucide.createIcons();
 
@@ -16,15 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedLang = localStorage.getItem('unipath_lang') || 'ru';
   const langLabel = document.getElementById('langToggleLabel');
   if (langLabel) langLabel.innerText = savedLang.toUpperCase();
+  applyLanguage(savedLang);
 });
 
 function setMobileNavActive(el) {
   document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
-    btn.classList.remove('bg-white', 'shadow-sm', 'text-indigo-600');
-    btn.classList.add('text-indigo-400');
+    btn.classList.remove('active-nav');
   });
-  el.classList.remove('text-indigo-400');
-  el.classList.add('bg-white', 'shadow-sm', 'text-indigo-600');
+  el.classList.add('active-nav');
 }
 
 /* ==================== ПЕРЕКЛЮЧЕНИЕ ТЕМЫ (с анимацией) ==================== */
@@ -73,6 +119,7 @@ function toggleLanguage() {
   const next = current === 'ru' ? 'en' : 'ru';
   localStorage.setItem('unipath_lang', next);
   if (label) label.innerText = next.toUpperCase();
+  applyLanguage(next);
 }
 
 const RAW_UNIVERSITIES = [
@@ -342,7 +389,7 @@ async function sendUserMessage(text) {
   chat.scrollTop = chat.scrollHeight;
 
   const botDiv = document.createElement('div');
-  botDiv.className = 'bg-white p-3.5 rounded-2xl rounded-tl-none border border-slate-200/90 text-slate-800 max-w-[92%] text-xs shadow-sm leading-relaxed my-1.5';
+  botDiv.className = 'bg-white p-3.5 rounded-2xl rounded-tl-none border border-slate-200/90 text-slate-800 max-w-[92%] text-xs shadow-sm leading-relaxed my-1.5 flex flex-col';
   botDiv.innerHTML = '<span class="animate-pulse text-slate-400">ИИ думает...</span>';
   chat.appendChild(botDiv);
   chat.scrollTop = chat.scrollHeight;
@@ -358,11 +405,34 @@ async function sendUserMessage(text) {
     });
     
     const data = await response.json();
-    botDiv.innerHTML = data.reply ? data.reply.replace(/\n/g, '<br>') : 'Ошибка получения ответа.';
+    const replyText = data.reply ? data.reply.replace(/\n/g, '<br>') : 'Ошибка получения ответа.';
+    
+    // Вставляем ответ и добавляем кнопку копирования диалога
+    botDiv.innerHTML = `
+      <div class="mb-2">${replyText}</div>
+      <button class="copy-dialog-btn flex items-center space-x-1.5 text-[10px] font-bold text-slate-400 hover:text-indigo-600 transition pt-2 border-t border-slate-100/80 mt-1 w-full justify-start active:scale-95 origin-left">
+        <i data-lucide="copy" class="w-3 h-3"></i>
+        <span>Скопировать диалог</span>
+      </button>
+    `;
+
+    // Логика кнопки
+    const copyBtn = botDiv.querySelector('.copy-dialog-btn');
+    copyBtn.onclick = () => {
+      const textToCopy = `Мой запрос: ${text}\nОтвет ИИ: ${data.reply || 'Ошибка получения ответа'}`;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        copyBtn.innerHTML = '<i data-lucide="check" class="w-3 h-3 text-emerald-500"></i><span class="text-emerald-500">Скопировано!</span>';
+        lucide.createIcons();
+        setTimeout(() => {
+          copyBtn.innerHTML = '<i data-lucide="copy" class="w-3 h-3"></i><span>Скопировать диалог</span>';
+          lucide.createIcons();
+        }, 2000);
+      });
+    };
   } catch (err) {
     botDiv.innerHTML = 'Не удалось связаться с сервером ИИ.';
   }
   
-  chat.scrollTop = chat.scrollHeight;
   lucide.createIcons();
+  chat.scrollTop = chat.scrollHeight;
 }
