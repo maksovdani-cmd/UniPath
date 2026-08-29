@@ -95,3 +95,40 @@ body, .bg-white, .bg-slate-50, .bg-slate-100,
 }
 
 .dark-theme .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
+
+/* ==================== LIQUID GLASS NAV (ОСТРОВОК) ==================== */
+.liquid-glass-nav {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 40px rgba(99, 102, 241, 0.15);
+  transition: all 0.3s ease;
+}
+
+.dark-theme .liquid-glass-nav {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.mobile-nav-btn {
+  color: #818cf8;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-btn.active-nav {
+  background: rgba(255, 255, 255, 0.95);
+  color: #4f46e5;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.dark-theme .mobile-nav-btn {
+  color: #475569;
+}
+
+.dark-theme .mobile-nav-btn.active-nav {
+  background: rgba(255, 255, 255, 0.15);
+  color: #a5b4fc;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
