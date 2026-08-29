@@ -9,15 +9,12 @@
       document.documentElement.classList.add('dark-theme');
     }
   </script>
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="min-h-screen relative overflow-x-hidden">
 
-  <!-- ==================== 1. ЭКРАН РЕГИСТРАЦИИ ==================== -->
   <div id="authScreen" class="fixed inset-0 z-[100] bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 md:p-8 shadow-2xl space-y-5 border border-slate-100 transform transition-all overflow-y-auto max-h-[95vh] custom-scrollbar">
       <div class="text-center space-y-2">
@@ -81,10 +78,8 @@
     </div>
   </div>
 
-  <!-- ==================== 2. ОСНОВНОЙ ИНТЕРФЕЙС ==================== -->
   <div id="mainApp" class="hidden min-h-screen flex flex-col md:flex-row">
 
-    <!-- Левое Навигационное Меню -->
     <aside class="hidden md:flex flex-col w-64 bg-white border-r border-slate-200/80 p-6 space-y-8 sticky top-0 h-screen shrink-0">
       <div class="flex items-center space-x-3">
         <div class="p-2.5 bg-indigo-600 rounded-xl text-white shadow-md shadow-indigo-200">
@@ -98,30 +93,28 @@
 
       <nav class="space-y-1.5 flex-1">
         <a href="#dashboard" class="flex items-center space-x-3 px-4 py-3 rounded-xl bg-indigo-600 text-white font-semibold text-sm shadow-md shadow-indigo-100">
-          <i data-lucide="layout-dashboard" class="w-4 h-4"></i><span>Главная</span>
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i><span data-i18n="nav_home">Главная</span>
         </a>
         <a href="#universitySection" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 font-medium text-sm transition">
-          <i data-lucide="landmark" class="w-4 h-4"></i><span>ВУЗы и Шансы</span>
+          <i data-lucide="landmark" class="w-4 h-4"></i><span data-i18n="nav_unis">ВУЗы и Шансы</span>
         </a>
         <a href="#resourcesSection" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 font-medium text-sm transition">
-          <i data-lucide="book-open" class="w-4 h-4"></i><span>База и Уроки</span>
+          <i data-lucide="book-open" class="w-4 h-4"></i><span data-i18n="nav_resources">База и Уроки</span>
         </a>
         <a href="#checklistSection" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 font-medium text-sm transition">
-          <i data-lucide="check-square" class="w-4 h-4"></i><span>Чек-лист 2026</span>
+          <i data-lucide="check-square" class="w-4 h-4"></i><span data-i18n="nav_checklist">Чек-лист 2026</span>
         </a>
       </nav>
 
       <div class="pt-4 border-t border-slate-100">
         <button onclick="logout()" class="flex items-center space-x-2 text-xs font-bold text-rose-600 p-3 bg-rose-50 hover:bg-rose-100 rounded-xl transition w-full justify-center">
-          <i data-lucide="log-out" class="w-4 h-4"></i><span>Сменить Профиль</span>
+          <i data-lucide="log-out" class="w-4 h-4"></i><span data-i18n="nav_logout">Сменить Профиль</span>
         </button>
       </div>
     </aside>
 
-    <!-- Основная Контентная Зона -->
     <main class="flex-1 p-4 md:p-8 space-y-6 overflow-y-auto max-w-7xl mx-auto w-full pb-28 md:pb-8">
 
-      <!-- Шапка -->
       <header class="flex items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div class="flex items-center space-x-2 bg-indigo-50 text-indigo-700 px-3.5 py-1.5 rounded-full border border-indigo-100 text-xs font-semibold">
           <span class="w-2 h-2 rounded-full bg-indigo-500 animate-ping"></span>
@@ -145,7 +138,6 @@
         </div>
       </header>
 
-      <!-- Главный Баннер -->
       <section class="relative bg-indigo-950 rounded-3xl p-6 md:p-8 text-white overflow-hidden shadow-xl shadow-indigo-950/20">
         <div class="relative z-10 space-y-2 max-w-2xl">
           <span class="px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-[11px] font-bold tracking-wider uppercase text-indigo-300 border border-white/10">Твой Профиль</span>
@@ -157,38 +149,32 @@
         <div class="absolute top-0 right-0 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
       </section>
 
-      <!-- Главная Сетка: Левая часть - ВУЗы и Ресурсы / Правая часть - AI Бот -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
-        <!-- Левый Столбец (7 колонок) -->
         <div class="lg:col-span-7 space-y-6">
 
-          <!-- СЕКЦИЯ: Список ВУЗов -->
           <section id="universitySection" class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm space-y-4">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <h2 class="font-extrabold text-slate-900 text-base flex items-center space-x-2">
                   <i data-lucide="landmark" class="w-5 h-5 text-indigo-600"></i>
-                  <span>Подборка ВУЗов и Расчет Шансов</span>
+                  <span data-i18n="title_unis">Подборка ВУЗов и Расчет Шансов</span>
                 </h2>
                 <p class="text-xs text-slate-500">Автоматическая корреляция с твоими академическими баллами</p>
               </div>
 
-              <!-- Поиск/Фильтр -->
-              <input type="text" id="uniSearchInput" aria-label="Поиск ВУЗа" oninput="filterUniversities()" placeholder="Поиск ВУЗа..." class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:ring-2 focus:ring-indigo-500">
+              <input type="text" id="uniSearchInput" aria-label="Поиск ВУЗа" data-i18n-ph="search_ph" oninput="filterUniversities()" placeholder="Поиск ВУЗа..." class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:ring-2 focus:ring-indigo-500">
             </div>
 
             <div id="universityList" class="space-y-3">
-              <!-- Карточки генерируются скриптом -->
-            </div>
+              </div>
           </section>
 
-          <!-- СЕКЦИЯ: Обучающие Ресурсы и Курсы (Полезные ссылки) -->
           <section id="resourcesSection" class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm space-y-4">
             <div>
               <h2 class="font-extrabold text-slate-900 text-base flex items-center space-x-2">
                 <i data-lucide="book-open" class="w-5 h-5 text-indigo-600"></i>
-                <span>Уроки и Бесплатные Ресурсы</span>
+                <span data-i18n="title_resources">Уроки и Бесплатные Ресурсы</span>
               </h2>
               <p class="text-xs text-slate-500">Официальные материалы, курсы и гайды для подготовки</p>
             </div>
@@ -246,11 +232,10 @@
             </div>
           </section>
 
-          <!-- СЕКЦИЯ: Чек-лист поступившего -->
           <section id="checklistSection" class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm space-y-3">
             <h2 class="font-extrabold text-slate-900 text-base flex items-center space-x-2">
               <i data-lucide="check-circle-2" class="w-5 h-5 text-indigo-600"></i>
-              <span>План подготовки (Checklist 2026)</span>
+              <span data-i18n="title_checklist">План подготовки (Checklist 2026)</span>
             </h2>
             <div class="space-y-2 text-xs font-medium text-slate-700" id="checklistContainer">
               <label class="flex items-center space-x-3 p-2.5 bg-slate-50 rounded-xl border border-slate-100 cursor-pointer hover:bg-slate-100 transition">
@@ -274,28 +259,25 @@
 
         </div>
 
-        <!-- Правый Столбец (5 колонок) - УМНЫЙ ИИ-БОТ И КОНСУЛЬТАНТ -->
         <div id="botSection" class="lg:col-span-5 sticky top-6">
           <section class="bg-white rounded-2xl border border-slate-200/90 shadow-lg flex flex-col h-[650px] overflow-hidden">
             
-            <!-- Шапка Бота -->
             <div class="p-4 border-b border-slate-100 bg-slate-900 text-white flex items-center justify-between">
               <div class="flex items-center space-x-3">
                 <div class="w-9 h-9 bg-indigo-600 rounded-xl flex items-center justify-center shadow-md">
                   <i data-lucide="bot" class="w-5 h-5 text-white"></i>
                 </div>
                 <div>
-                  <h3 class="font-bold text-sm leading-tight">UniBot Mentor AI</h3>
+                  <h3 class="font-bold text-sm leading-tight" data-i18n="bot_title">UniBot Mentor AI</h3>
                   <p class="text-[10px] text-indigo-300 flex items-center space-x-1">
                     <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
-                    <span>Консультант по поступившим</span>
+                    <span data-i18n="bot_subtitle">Консультант по поступившим</span>
                   </p>
                 </div>
               </div>
               <span class="text-[10px] bg-white/10 px-2 py-1 rounded-md text-slate-300">v2.4</span>
             </div>
 
-            <!-- История Сообщений -->
             <div id="chatHistory" class="flex-1 p-4 overflow-y-auto space-y-3 custom-scrollbar text-xs bg-slate-50/50">
               <div class="bg-white p-3.5 rounded-2xl rounded-tl-none border border-slate-200/80 text-slate-800 shadow-sm leading-relaxed space-y-2">
                 <p>👋 Привет! Я твой персональный ментор поступления.</p>
@@ -303,9 +285,7 @@
               </div>
             </div>
 
-            <!-- Подсказки и Ввод -->
             <div class="p-3 border-t border-slate-100 bg-white space-y-2">
-              <!-- Быстрые Кнопки -->
               <div class="flex overflow-x-auto space-x-1.5 pb-1 custom-scrollbar hide-scrollbar">
                 <button onclick="sendUserMessage('Как поднять IELTS?')" class="shrink-0 px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-[10px] font-bold border border-indigo-100 transition">📚 Курсы IELTS</button>
                 <button onclick="sendUserMessage('Как получить стипендию?')" class="shrink-0 px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-[10px] font-bold border border-indigo-100 transition">💰 Стипендии</button>
@@ -313,9 +293,8 @@
                 <button onclick="sendUserMessage('Шансы в Harvard?')" class="shrink-0 px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-[10px] font-bold border border-indigo-100 transition">🎓 Harvard</button>
               </div>
               
-              <!-- Поле Ввода -->
               <div class="flex items-center space-x-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
-                <input type="text" id="chatInput" aria-label="Сообщение для ИИ-консультанта" placeholder="Спроси о ВУЗах, эссе или курсах..." class="flex-1 px-3 py-1.5 bg-transparent border-none text-xs outline-none text-slate-800 font-medium" onkeypress="handleEnter(event)">
+                <input type="text" id="chatInput" aria-label="Сообщение для ИИ-консультанта" data-i18n-ph="bot_ph" placeholder="Спроси о ВУЗах, эссе или курсах..." class="flex-1 px-3 py-1.5 bg-transparent border-none text-xs outline-none text-slate-800 font-medium" onkeypress="handleEnter(event)">
                 <button onclick="processInput()" class="p-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-md transition active:scale-95">
                   <i data-lucide="send" class="w-4 h-4"></i>
                 </button>
@@ -329,25 +308,23 @@
 
     </main>
 
-    <!-- ==================== МОБИЛЬНАЯ НИЖНЯЯ НАВИГАЦИЯ ==================== -->
-    <nav id="mobileBottomNav" class="md:hidden fixed bottom-4 inset-x-10 z-50 flex items-center justify-between bg-indigo-100/90 backdrop-blur-md rounded-full shadow-lg shadow-indigo-950/10 border border-indigo-200/60 px-3 py-2">
-      <a href="#dashboard" onclick="setMobileNavActive(this)" data-tab="dashboard" class="mobile-nav-btn flex items-center justify-center w-11 h-11 rounded-full transition text-indigo-600 bg-white shadow-sm">
+    <nav id="mobileBottomNav" class="md:hidden fixed bottom-4 inset-x-10 z-50 flex items-center justify-between liquid-glass-nav rounded-full px-3 py-2">
+      <a href="#dashboard" onclick="setMobileNavActive(this)" data-tab="dashboard" class="mobile-nav-btn active-nav flex items-center justify-center w-11 h-11 rounded-full">
         <i data-lucide="home" class="w-5 h-5"></i>
       </a>
-      <a href="#botSection" onclick="setMobileNavActive(this)" data-tab="bot" class="mobile-nav-btn flex items-center justify-center w-11 h-11 rounded-full transition text-indigo-400">
+      <a href="#botSection" onclick="setMobileNavActive(this)" data-tab="bot" class="mobile-nav-btn flex items-center justify-center w-11 h-11 rounded-full">
         <i data-lucide="bot" class="w-5 h-5"></i>
       </a>
-      <button type="button" onclick="openEditProfile(); setMobileNavActive(this)" data-tab="profile" class="mobile-nav-btn flex items-center justify-center w-11 h-11 rounded-full transition text-indigo-400">
+      <button type="button" onclick="openEditProfile(); setMobileNavActive(this)" data-tab="profile" class="mobile-nav-btn flex items-center justify-center w-11 h-11 rounded-full">
         <i data-lucide="user" class="w-5 h-5"></i>
       </button>
-      <a href="#universitySection" onclick="setMobileNavActive(this)" data-tab="unis" class="mobile-nav-btn flex items-center justify-center w-11 h-11 rounded-full transition text-indigo-400">
+      <a href="#universitySection" onclick="setMobileNavActive(this)" data-tab="unis" class="mobile-nav-btn flex items-center justify-center w-11 h-11 rounded-full">
         <i data-lucide="graduation-cap" class="w-5 h-5"></i>
       </a>
     </nav>
 
   </div>
 
-  <!-- ==================== МОДАЛЬНОЕ ОКНО УНИВЕРСИТЕТА ==================== -->
   <div id="uniModal" class="fixed inset-0 z-[200] bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
     <div class="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl transform transition-all flex flex-col max-h-[90vh]">
       <div class="relative h-48 sm:h-64 shrink-0">
@@ -373,14 +350,12 @@
             <i data-lucide="star" class="w-4 h-4 text-amber-500"></i> Уникальные факты
           </h4>
           <ul id="modalUniFacts" class="space-y-3 text-sm text-slate-700 list-none font-medium">
-            <!-- Факты генерируются через JS -->
-          </ul>
+            </ul>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- JavaScript Логика -->
   <script src="script.js"></script>
 </body>
 </html>
