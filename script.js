@@ -22,6 +22,34 @@ function setMobileNavActive(el) {
   el.classList.add('bg-white', 'shadow-sm', 'text-indigo-600');
 }
 
+/* ==================== ПЕРЕКЛЮЧЕНИЕ ТЕМЫ (с анимацией) ==================== */
+function toggleTheme() {
+  const root = document.documentElement;
+  const isDark = root.classList.contains('dark-theme');
+
+  let overlay = document.getElementById('themeOverlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'themeOverlay';
+    document.body.appendChild(overlay);
+  }
+
+  overlay.style.backgroundColor = isDark ? '#f1f5f9' : '#0b1120';
+
+  requestAnimationFrame(() => {
+    overlay.classList.add('expand');
+  });
+
+  setTimeout(() => {
+    root.classList.toggle('dark-theme');
+    localStorage.setItem('unipath_theme', isDark ? 'light' : 'dark');
+  }, 300);
+
+  setTimeout(() => {
+    overlay.classList.remove('expand');
+  }, 650);
+}
+
 const RAW_UNIVERSITIES = [
   { name: 'Harvard University', logo: './image/harvard.png' },
   { name: 'Stanford University', logo: './image/stanford.svg' },
