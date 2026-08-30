@@ -532,29 +532,29 @@ function renderUniversities(filteredList = DB) {
     }
 
     const card = document.createElement('div');
-    card.className = 'p-4 border border-slate-200/80 rounded-2xl bg-white hover:border-indigo-400 hover:shadow-lg transition duration-300 cursor-pointer group';
+    card.className = 'p-4 border border-slate-200/80 rounded-2xl bg-white hover:border-indigo-400 hover:shadow-lg transition duration-300 cursor-pointer group overflow-hidden';
     card.onclick = () => openUniModal(uni.name);
 
     card.innerHTML = `
-      <div class="flex items-center justify-between mb-2">
-        <div class="flex items-center space-x-3">
+      <div class="flex flex-wrap items-start justify-between gap-x-2 gap-y-1 mb-2">
+        <div class="flex items-center space-x-3 min-w-0 flex-1">
           <div class="w-10 h-10 flex items-center justify-center bg-slate-50 border border-slate-200 rounded-xl p-1 shrink-0 overflow-hidden group-hover:scale-105 transition">
             <img src="${uni.logo}" 
                  onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\\'font-extrabold text-indigo-600 text-sm\\'>${uni.name.charAt(0)}</span>';" 
                  class="max-w-full max-h-full object-contain" 
                  alt="${uni.name}">
           </div>
-          <div>
+          <div class="min-w-0">
             <div class="flex items-center space-x-2">
-              <h4 class="font-extrabold text-slate-900 text-xs md:text-sm leading-snug group-hover:text-indigo-600 transition">${uni.name}</h4>
+              <h4 class="font-extrabold text-slate-900 text-xs md:text-sm leading-snug group-hover:text-indigo-600 transition break-words">${uni.name}</h4>
               <img src="${uni.flag}" class="w-4 h-3 rounded-sm object-cover shadow-sm shrink-0" alt="Flag">
             </div>
-            <p class="text-[11px] text-slate-400">${uni.location} • <span class="text-indigo-600 font-medium">${uni.tuition}</span></p>
+            <p class="text-[11px] text-slate-400 break-words">${uni.location} • <span class="text-indigo-600 font-medium">${uni.tuition}</span></p>
           </div>
         </div>
-        <div class="text-right shrink-0">
-          <span class="text-xs md:text-sm font-extrabold ${textColor}">${matchLabel}</span>
-          <p class="text-[10px] text-slate-400">Мин. IELTS: ${uni.minIELTS} • Мин. GPA: ${uni.minGPA}</p>
+        <div class="text-right shrink-0 max-w-[42%] sm:max-w-none">
+          <span class="text-xs md:text-sm font-extrabold ${textColor} break-words">${matchLabel}</span>
+          <p class="text-[10px] text-slate-400 break-words">Мин. IELTS: ${uni.minIELTS} • Мин. GPA: ${uni.minGPA}</p>
         </div>
       </div>
       <div class="space-y-1">
