@@ -39,6 +39,10 @@ function findDuplicate(answer, history) {
   return history.find((pastText) => similarity(answer, pastText) >= DUPLICATE_SIMILARITY_THRESHOLD);
 }
 
+// Groq использует OpenAI-совместимый формат Chat Completions API
+const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+const GROQ_MODEL = 'llama-3.3-70b-versatile';
+
 async function askLeoAI(answer, mission) {
   const apiKey = process.env.AI_API_KEY;
 
@@ -55,7 +59,7 @@ async function askLeoAI(answer, mission) {
 Тебе дают формулировку ежедневной миссии и ответ студента.
 Оцени, действительно ли ответ похож на честную, конкретную попытку выполнить именно эту миссию
 (не пустая отписка, не спам, не набор случайных слов, соответствует теме миссии).
-Отвечай СТРОГО в формате JSON без каких-либо пояснений до или после:
+Отвечай СТРОГО в формате JSON без каких-либо пояснений до или после, без markdown-разметки:
 {"success": true or false, "message": "короткое дружелюбное сообщение от Лео на русском языке, 1-2 предложения, с эмодзи"}
 Если success=true — искренне похвали студента и упомяни конкретную деталь из его ответа.
 Если success=false — мягко объясни, что не так, и предложи, как улучшить ответ. Никогда не будь грубым.`;
@@ -63,18 +67,21 @@ async function askLeoAI(answer, mission) {
   const userPrompt = `Миссия: "${mission}"\nОтвет студента: "${answer}"`;
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch(GROQ_API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
+        'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
+        model: GROQ_MODEL,
         max_tokens: 300,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: userPrompt }]
+        temperature: 0.7,
+        response_format: { type: 'json_object' },
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ]
       })
     });
 
@@ -83,11 +90,7 @@ async function askLeoAI(answer, mission) {
     }
 
     const data = await response.json();
-    const rawText = (data.content || [])
-      .filter((block) => block.type === 'text')
-      .map((block) => block.text)
-      .join('\n')
-      .trim();
+    const rawText = data.choices?.[0]?.message?.content?.trim() || '';
 
     const cleaned = rawText.replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(cleaned);
