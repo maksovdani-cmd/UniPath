@@ -496,6 +496,8 @@ function updateUI() {
   }
 
   renderUniversities();
+  renderLeoWidget();
+  initLeoNotifications();
 }
 
 function renderUniversities(filteredList = DB) {
@@ -779,4 +781,247 @@ async function sendUserMessage(text) {
   
   lucide.createIcons();
   chat.scrollTop = chat.scrollHeight;
+}
+// ==================== LEO'S DAILY MISSIONS ====================
+
+const LEO_MISSIONS = [
+  "Найди 2 extracurricular activities, которые соответствуют твоей специальности.",
+  "Напиши первые 100 слов своего Personal Statement.",
+  "Добавь 3 university в свой shortlist.",
+  "Выучи 15 новых слов для IELTS/SAT."
+];
+
+const LEO_MIN_WORDS = 20;
+const LEO_HISTORY_KEY = 'unipath_penguin_history';
+const LEO_PROGRESS_KEY = 'unipath_penguin_progress';
+const LEO_NOTIFY_KEY = 'unipath_penguin_notified_day';
+
+// Ключ дня в формате "год-деньГода" — используется, чтобы миссия менялась ровно раз в 24 часа
+function getLeoDayKey() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const diff = now - start;
+  const dayOfYear = Math.floor(diff / 86400000);
+  return `${now.getFullYear()}-${dayOfYear}`;
+}
+
+function getLeoDayIndex() {
+  const [, dayOfYear] = getLeoDayKey().split('-').map(Number);
+  return dayOfYear % LEO_MISSIONS.length;
+}
+
+function getTodayLeoMission() {
+  return LEO_MISSIONS[getLeoDayIndex()];
+}
+
+function getLeoHistory() {
+  try {
+    return JSON.parse(localStorage.getItem(LEO_HISTORY_KEY)) || [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveLeoHistoryEntry(text) {
+  const history = getLeoHistory();
+  history.push({ day: getLeoDayKey(), text });
+  // Храним только последние 30 записей, чтобы не раздувать localStorage
+  localStorage.setItem(LEO_HISTORY_KEY, JSON.stringify(history.slice(-30)));
+}
+
+function getLeoProgress() {
+  try {
+    return JSON.parse(localStorage.getItem(LEO_PROGRESS_KEY)) || {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function isTodayLeoMissionDone() {
+  return getLeoProgress().lastCompletedDay === getLeoDayKey();
+}
+
+function markTodayLeoMissionDone() {
+  localStorage.setItem(LEO_PROGRESS_KEY, JSON.stringify({ lastCompletedDay: getLeoDayKey() }));
+}
+
+// ---------- Виджет на дашборде ----------
+
+function renderLeoWidget() {
+  const preview = document.getElementById('leoMissionPreview');
+  const doneBadge = document.getElementById('leoDoneBadge');
+  const timerBadge = document.getElementById('leoTimerBadge');
+  if (!preview) return;
+
+  preview.innerText = getTodayLeoMission();
+
+  const done = isTodayLeoMissionDone();
+  if (doneBadge) doneBadge.classList.toggle('hidden', !done);
+  if (doneBadge) doneBadge.classList.toggle('flex', done);
+  if (timerBadge) timerBadge.classList.toggle('hidden', done);
+
+  if (window.lucide) lucide.createIcons();
+}
+
+// ---------- Модальное окно ----------
+
+function buildLeoGreeting() {
+  const firstName = (user.name || '').split(' ')[0] || 'друг';
+  let greeting = `Привет, ${firstName}! 👋 Я Лео, твой помощник по подготовке. Готов(а) выполнить сегодняшнюю миссию?`;
+
+  const hasGpa = !user.gpaPending && user.gpa !== null && user.gpa !== undefined;
+  const hasIelts = !user.ieltsPending && user.ielts !== null && user.ielts !== undefined;
+
+  if (hasGpa || hasIelts) {
+    const parts = [];
+    if (hasGpa) parts.push(`GPA ${user.gpa}`);
+    if (hasIelts) parts.push(`IELTS ${user.ielts}`);
+    greeting += ` Кстати, с ${parts.join(' и ')} у тебя отличная база — маленькие ежедневные шаги приблизят тебя к цели ещё быстрее!`;
+  }
+
+  return greeting;
+}
+
+function openLeoModal() {
+  const modal = document.getElementById('leoModal');
+  if (!modal) return;
+
+  document.getElementById('leoGreetingText').innerText = buildLeoGreeting();
+  document.getElementById('leoMissionText').innerText = getTodayLeoMission();
+
+  const answerInput = document.getElementById('leoAnswerInput');
+  const submitBtn = document.getElementById('leoSubmitBtn');
+  const feedbackBox = document.getElementById('leoFeedbackBox');
+
+  feedbackBox.classList.add('hidden');
+  feedbackBox.classList.remove('leo-success', 'leo-error');
+  feedbackBox.innerHTML = '';
+
+  if (isTodayLeoMissionDone()) {
+    answerInput.value = '';
+    answerInput.disabled = true;
+    submitBtn.disabled = true;
+    feedbackBox.classList.remove('hidden');
+    feedbackBox.classList.add('leo-success');
+    feedbackBox.innerHTML = '🎉 Ты уже сдал(а) сегодняшнюю миссию, отличная работа! Возвращайся завтра за новым заданием.';
+  } else {
+    answerInput.disabled = false;
+    submitBtn.disabled = false;
+    answerInput.value = '';
+  }
+
+  modal.classList.remove('hidden');
+  requestAnimationFrame(() => modal.classList.remove('opacity-0'));
+  if (window.lucide) lucide.createIcons();
+}
+
+function closeLeoModal() {
+  const modal = document.getElementById('leoModal');
+  if (!modal) return;
+  modal.classList.add('opacity-0');
+  setTimeout(() => modal.classList.add('hidden'), 300);
+}
+
+// ---------- Отправка ответа Лео ----------
+
+async function submitLeoMission() {
+  const answerInput = document.getElementById('leoAnswerInput');
+  const submitBtn = document.getElementById('leoSubmitBtn');
+  const feedbackBox = document.getElementById('leoFeedbackBox');
+
+  const answer = answerInput.value.trim();
+
+  feedbackBox.classList.remove('leo-success', 'leo-error');
+
+  if (!answer) {
+    feedbackBox.classList.remove('hidden');
+    feedbackBox.classList.add('leo-error');
+    feedbackBox.innerHTML = 'Напиши пару предложений о том, что ты сделал(а) — тогда Лео сможет это проверить.';
+    return;
+  }
+
+  const wordCount = answer.split(/\s+/).filter(Boolean).length;
+  if (wordCount < LEO_MIN_WORDS) {
+    feedbackBox.classList.remove('hidden');
+    feedbackBox.classList.add('leo-error');
+    feedbackBox.innerHTML = `Пиши чуть подробнее 🙂 Нужно минимум ${LEO_MIN_WORDS} слов, а у тебя сейчас ${wordCount}.`;
+    return;
+  }
+
+  submitBtn.disabled = true;
+  const originalBtnHTML = submitBtn.innerHTML;
+  submitBtn.innerHTML = '<span class="animate-pulse">Лео проверяет ответ...</span>';
+
+  try {
+    const response = await fetch('/.netlify/functions/ai-check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        answer,
+        mission: getTodayLeoMission(),
+        history: getLeoHistory().map(h => h.text)
+      })
+    });
+
+    const data = await response.json();
+
+    feedbackBox.classList.remove('hidden');
+
+    if (data.success) {
+      feedbackBox.classList.add('leo-success');
+      feedbackBox.innerHTML = data.message || '🎉 Отлично, миссия засчитана!';
+      saveLeoHistoryEntry(answer);
+      markTodayLeoMissionDone();
+      answerInput.disabled = true;
+      renderLeoWidget();
+    } else {
+      feedbackBox.classList.add('leo-error');
+      feedbackBox.innerHTML = data.message || 'Лео думает, что тут можно доработать. Попробуй еще раз!';
+      submitBtn.disabled = false;
+    }
+  } catch (err) {
+    feedbackBox.classList.remove('hidden');
+    feedbackBox.classList.add('leo-error');
+    feedbackBox.innerHTML = 'Не удалось связаться с Лео. Проверь соединение и попробуй снова.';
+    submitBtn.disabled = false;
+  }
+
+  submitBtn.innerHTML = originalBtnHTML;
+  if (window.lucide) lucide.createIcons();
+}
+
+// ---------- Push-уведомления ----------
+
+function initLeoNotifications() {
+  if (!('Notification' in window)) return;
+
+  if (Notification.permission === 'default') {
+    Notification.requestPermission().then(() => sendLeoDailyNotification());
+    return;
+  }
+
+  sendLeoDailyNotification();
+}
+
+function sendLeoDailyNotification() {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+
+  const todayKey = getLeoDayKey();
+  if (localStorage.getItem(LEO_NOTIFY_KEY) === todayKey) return; // уже уведомляли сегодня
+  if (isTodayLeoMissionDone()) return;
+
+  try {
+    const notification = new Notification("Leo's Daily Mission 🐧", {
+      body: `Today's Mission => ${getTodayLeoMission()} [Start mission]`,
+      icon: '/image/leo-penguin.png',
+      badge: '/image/leo-penguin.png'
+    });
+    notification.onclick = () => {
+      window.focus();
+      openLeoModal();
+    };
+    localStorage.setItem(LEO_NOTIFY_KEY, todayKey);
+  } catch (e) {
+    // Уведомления недоступны в этом окружении (например, некоторые мобильные webview) — тихо игнорируем
+  }
 }
