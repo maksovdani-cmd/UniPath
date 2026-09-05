@@ -167,6 +167,30 @@
         <div class="absolute top-0 right-0 w-80 h-80 bg-indigo-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
       </section>
 
+      <!-- ==================== LEO'S DAILY MISSIONS — ВИДЖЕТ ==================== -->
+      <section id="leoMissionWidget" onclick="openLeoModal()" class="leo-mission-card relative flex items-center gap-4 p-4 sm:p-5 rounded-2xl cursor-pointer overflow-hidden group">
+        <div class="leo-mission-glow"></div>
+        <div class="relative shrink-0">
+          <img src="/image/leo-penguin.png" alt="Leo" class="w-14 h-14 sm:w-16 sm:h-16 object-contain drop-shadow-lg leo-bounce">
+        </div>
+        <div class="relative flex-1 min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-300">☕ Today's Mission</span>
+            <span id="leoTimerBadge" class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-amber-300 border border-white/10">
+              <i data-lucide="clock" class="w-2.5 h-2.5"></i> 20 minutes
+            </span>
+            <span id="leoDoneBadge" class="hidden items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/20">
+              <i data-lucide="check" class="w-2.5 h-2.5"></i> Done today
+            </span>
+          </div>
+          <p id="leoMissionPreview" class="text-white font-bold text-sm mt-1 truncate">Загружаем миссию...</p>
+        </div>
+        <button type="button" onclick="openLeoModal(); event.stopPropagation();" class="relative shrink-0 px-3.5 py-2 sm:px-4 sm:py-2.5 bg-white text-indigo-700 hover:bg-indigo-50 font-bold text-xs rounded-xl shadow-lg transition active:scale-95 flex items-center gap-1.5">
+          <span>Start mission</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </section>
+
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
         <div class="lg:col-span-7 space-y-6">
@@ -394,6 +418,46 @@
           <div id="modalUniMajors" class="space-y-2.5"></div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- ==================== LEO'S DAILY MISSIONS — МОДАЛЬНОЕ ОКНО ==================== -->
+  <div id="leoModal" class="fixed inset-0 z-[200] bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+    <div class="glass-card bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl transform transition-all flex flex-col max-h-[92vh]">
+
+      <div class="relative pt-6 px-6 pb-5 bg-gradient-to-br from-indigo-950 via-indigo-900 to-slate-900 text-white shrink-0">
+        <button onclick="closeLeoModal()" class="absolute top-3 right-3 p-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full text-white transition active:scale-95">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+        <div class="flex flex-col items-center text-center space-y-3">
+          <img src="/image/leo-penguin.png" alt="Leo the Penguin" class="w-24 h-24 object-contain drop-shadow-xl leo-bounce">
+          <div class="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-2.5 max-w-[90%]">
+            <p id="leoGreetingText" class="text-xs font-medium leading-relaxed"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-5 sm:p-6 space-y-4 overflow-y-auto custom-scrollbar">
+        <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-4 space-y-1.5">
+          <span class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-500 flex items-center gap-1.5">
+            <i data-lucide="target" class="w-3.5 h-3.5"></i> Миссия дня
+          </span>
+          <p id="leoMissionText" class="text-sm font-bold text-slate-800 leading-relaxed"></p>
+        </div>
+
+        <div>
+          <label for="leoAnswerInput" class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Твой ответ</label>
+          <textarea id="leoAnswerInput" rows="4" placeholder="Опиши, что ты сделал(а)..." class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none text-sm transition font-medium resize-none"></textarea>
+        </div>
+
+        <div id="leoFeedbackBox" class="hidden rounded-xl p-3 text-xs font-semibold leading-relaxed"></div>
+
+        <button id="leoSubmitBtn" onclick="submitLeoMission()" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 transition-all text-sm active:scale-95 flex items-center justify-center gap-2">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>Отправить Лео</span>
+        </button>
+      </div>
+
     </div>
   </div>
 
