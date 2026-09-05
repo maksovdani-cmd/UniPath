@@ -1013,8 +1013,8 @@ function sendLeoDailyNotification() {
   try {
     const notification = new Notification("Leo's Daily Mission 🐧", {
       body: `Today's Mission => ${getTodayLeoMission()} [Start mission]`,
-      icon: '/image/leo-penguin.png',
-      badge: '/image/leo-penguin.png'
+      icon: '/image/leo-face.png',
+      badge: '/image/leo-face.png'
     });
     notification.onclick = () => {
       window.focus();
