@@ -1,0 +1,21 @@
+{
+  "name": "UniPath AI",
+  "short_name": "UniPath",
+  "description": "Платформа подготовки к поступлению 2026",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f1f5f9",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "/image/unipathlogo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/image/unipathlogo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
