@@ -387,11 +387,14 @@
   <div id="uniModal" class="fixed inset-0 z-[200] bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
     <div class="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl transform transition-all flex flex-col max-h-[90vh]">
       <div class="relative h-48 sm:h-64 shrink-0">
-        <img id="modalUniPhoto" src="" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80'" class="w-full h-full object-cover" alt="University Photo">
+        <img id="modalUniPhoto" src="" class="w-full h-full object-cover" alt="University Photo">
         <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent"></div>
         <button onclick="closeUniModal()" class="absolute top-4 right-4 p-2 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full text-white transition active:scale-95">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
+        <a id="modalUniWebsiteBtn" href="#" target="_blank" rel="noopener" class="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1.5 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full text-white text-[11px] font-bold transition active:scale-95">
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Сайт вуза
+        </a>
         <div class="absolute bottom-4 left-6 pr-6">
           <h3 id="modalUniName" class="text-2xl sm:text-3xl font-black text-white drop-shadow-md"></h3>
           <p id="modalUniLocation" class="text-indigo-200 text-sm font-medium mt-1 flex items-center gap-2"></p>
