@@ -183,6 +183,288 @@ const MAJORS_LIST = [
 ];
 
 // ==================== БАЗА УНИВЕРСИТЕТОВ (страна / штат / город) ====================
+function svgUri(svg) {
+  return 'data:image/svg+xml,' + encodeURIComponent(svg.replace(/\s+/g, ' ').trim());
+}
+
+const SCN = {
+  fuji: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#eaf2f8'/>
+    <circle cx='630' cy='100' r='55' fill='#ffd76a'/>
+    <polygon points='400,80 560,330 240,330' fill='#5c7a99'/>
+    <polygon points='400,80 460,190 340,190' fill='#ffffff'/>
+    <rect y='330' width='800' height='70' fill='#4a7c59'/>
+  </svg>`),
+  sakura: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#fde8ef'/>
+    <path d='M0 350 Q200 310 400 335 T800 325 V400 H0 Z' fill='#6b8f71'/>
+    <path d='M100 260 Q150 150 210 120' stroke='#7a5240' stroke-width='12' fill='none'/>
+    <path d='M600 250 Q660 140 710 100' stroke='#7a5240' stroke-width='12' fill='none'/>
+    <g fill='#f4a7c0'>
+      <circle cx='150' cy='130' r='24'/><circle cx='195' cy='105' r='24'/><circle cx='230' cy='140' r='24'/>
+      <circle cx='630' cy='95' r='24'/><circle cx='675' cy='75' r='24'/><circle cx='710' cy='110' r='24'/>
+    </g>
+  </svg>`),
+  greatwall1: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#f6e7c9'/>
+    <circle cx='650' cy='90' r='50' fill='#e0763a'/>
+    <path d='M0 280 L80 250 L120 280 L200 240 L240 275 L330 230 L370 270 L460 220 L500 265 L590 215 L630 260 L720 210 L800 250 V400 H0 Z' fill='#8a6a4a'/>
+    <rect x='60' y='230' width='36' height='40' fill='#7a5a3c'/>
+    <rect x='310' y='215' width='36' height='40' fill='#7a5a3c'/>
+    <rect x='570' y='200' width='36' height='40' fill='#7a5a3c'/>
+  </svg>`),
+  greatwall2: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#dcebf0'/>
+    <circle cx='150' cy='90' r='45' fill='#ffffff' opacity='0.8'/>
+    <path d='M0 300 L80 270 L120 300 L200 260 L240 295 L330 250 L370 290 L460 240 L500 285 L590 235 L630 280 L720 230 L800 270 V400 H0 Z' fill='#c0392b'/>
+    <rect x='60' y='250' width='36' height='40' fill='#a5302a'/>
+    <rect x='310' y='235' width='36' height='40' fill='#a5302a'/>
+    <rect x='570' y='220' width='36' height='40' fill='#a5302a'/>
+  </svg>`),
+  hanok: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#e8f0fb'/>
+    <rect y='330' width='800' height='70' fill='#8fa876'/>
+    <path d='M180 260 Q400 170 620 260 L620 290 L180 290 Z' fill='#274b6e'/>
+    <rect x='250' y='290' width='300' height='60' fill='#c0392b'/>
+    <path d='M150 265 Q400 185 650 265' stroke='#1a3550' stroke-width='8' fill='none'/>
+  </svg>`),
+  modernkorea: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#0f1f3d'/>
+    <rect x='120' y='150' width='70' height='200' fill='#22406b'/>
+    <rect x='220' y='100' width='80' height='250' fill='#2c527f'/>
+    <rect x='330' y='180' width='60' height='170' fill='#22406b'/>
+    <rect x='420' y='60' width='90' height='290' fill='#37699e'/>
+    <rect x='540' y='130' width='70' height='220' fill='#22406b'/>
+    <rect x='630' y='170' width='80' height='180' fill='#2c527f'/>
+    <circle cx='460' cy='90' r='6' fill='#ffd76a'/>
+    <circle cx='250' cy='130' r='6' fill='#ffd76a'/>
+  </svg>`),
+  marina: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#fdf1e0'/>
+    <rect y='310' width='800' height='90' fill='#2b6a8f'/>
+    <rect x='340' y='150' width='40' height='170' fill='#3a3a3a'/>
+    <rect x='400' y='150' width='40' height='170' fill='#3a3a3a'/>
+    <rect x='460' y='150' width='40' height='170' fill='#3a3a3a'/>
+    <rect x='320' y='120' width='200' height='40' fill='#4a4a4a'/>
+    <ellipse cx='150' cy='330' rx='60' ry='18' fill='#dfe6ea'/>
+  </svg>`),
+  harbourHK1: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#e3edf5'/>
+    <rect y='320' width='800' height='80' fill='#3d6e8f'/>
+    <rect x='100' y='180' width='40' height='140' fill='#5a6b7a'/>
+    <rect x='160' y='140' width='50' height='180' fill='#4a5b6a'/>
+    <rect x='230' y='200' width='36' height='120' fill='#5a6b7a'/>
+    <rect x='290' y='100' width='60' height='220' fill='#3a4b5a'/>
+    <rect x='370' y='170' width='44' height='150' fill='#5a6b7a'/>
+    <rect x='440' y='120' width='55' height='200' fill='#4a5b6a'/>
+    <rect x='520' y='190' width='40' height='130' fill='#5a6b7a'/>
+    <rect x='580' y='80' width='65' height='240' fill='#324556'/>
+  </svg>`),
+  harbourHK2: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#f7e9e4'/>
+    <rect y='320' width='800' height='80' fill='#a75d4a'/>
+    <rect x='100' y='180' width='40' height='140' fill='#8a6250'/>
+    <rect x='160' y='140' width='50' height='180' fill='#795546'/>
+    <rect x='230' y='200' width='36' height='120' fill='#8a6250'/>
+    <rect x='290' y='100' width='60' height='220' fill='#634638'/>
+    <rect x='370' y='170' width='44' height='150' fill='#8a6250'/>
+    <rect x='440' y='120' width='55' height='200' fill='#795546'/>
+    <rect x='520' y='190' width='40' height='130' fill='#8a6250'/>
+    <rect x='580' y='80' width='65' height='240' fill='#523a2e'/>
+  </svg>`),
+  indiagate: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#f9e6c8'/>
+    <rect y='330' width='800' height='70' fill='#9a7a4a'/>
+    <rect x='340' y='140' width='120' height='180' fill='#c9a15a'/>
+    <path d='M340 140 Q400 90 460 140' fill='#c9a15a'/>
+    <rect x='300' y='300' width='200' height='20' fill='#a5804a'/>
+  </svg>`),
+  gatewayindia: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#dcecf2'/>
+    <rect y='320' width='800' height='80' fill='#3d7a94'/>
+    <rect x='330' y='130' width='140' height='190' fill='#5a4a3a'/>
+    <path d='M350 130 Q400 60 450 130 Z' fill='#5a4a3a'/>
+    <rect x='370' y='180' width='60' height='140' fill='#dcecf2'/>
+    <rect x='250' y='250' width='60' height='70' fill='#5a4a3a'/>
+    <rect x='490' y='250' width='60' height='70' fill='#5a4a3a'/>
+  </svg>`),
+  eiffel: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#fcebd8'/>
+    <rect y='340' width='800' height='60' fill='#7a8a6a'/>
+    <path d='M400 80 L340 340 L390 340 L400 220 L410 340 L460 340 Z' fill='#4a4a4a'/>
+    <path d='M370 200 L430 200' stroke='#4a4a4a' stroke-width='6'/>
+    <path d='M355 270 L445 270' stroke='#4a4a4a' stroke-width='6'/>
+  </svg>`),
+  notredame: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#e9e3f2'/>
+    <rect y='330' width='800' height='70' fill='#5b6b8a'/>
+    <rect x='320' y='150' width='60' height='180' fill='#8a7a6a'/>
+    <rect x='420' y='150' width='60' height='180' fill='#8a7a6a'/>
+    <polygon points='320,150 350,100 380,150' fill='#6a5a4a'/>
+    <polygon points='420,150 450,100 480,150' fill='#6a5a4a'/>
+    <circle cx='400' cy='220' r='24' fill='#e9e3f2' stroke='#6a5a4a' stroke-width='4'/>
+  </svg>`),
+  duomo1: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#fde9d6'/>
+    <rect y='330' width='800' height='70' fill='#8a7050'/>
+    <rect x='300' y='170' width='200' height='160' fill='#d8cbb0'/>
+    <polygon points='300,170 400,100 500,170' fill='#c4b596'/>
+    <polygon points='260,200 300,170 300,330 260,330' fill='#c4b596'/>
+    <polygon points='500,170 540,200 540,330 500,330' fill='#c4b596'/>
+    <line x1='400' y1='100' x2='400' y2='70' stroke='#8a7050' stroke-width='4'/>
+  </svg>`),
+  duomo2: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#e4ecf4'/>
+    <rect y='330' width='800' height='70' fill='#5a6a80'/>
+    <rect x='300' y='170' width='200' height='160' fill='#aebccb'/>
+    <polygon points='300,170 400,100 500,170' fill='#96a6b8'/>
+    <polygon points='260,200 300,170 300,330 260,330' fill='#96a6b8'/>
+    <polygon points='500,170 540,200 540,330 500,330' fill='#96a6b8'/>
+    <line x1='400' y1='100' x2='400' y2='70' stroke='#5a6a80' stroke-width='4'/>
+  </svg>`),
+  windmill: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#dcecef'/>
+    <rect y='340' width='800' height='60' fill='#6a9955'/>
+    <polygon points='390,340 380,200 410,200 400,340' fill='#c9a96a'/>
+    <g stroke='#5a4a3a' stroke-width='6'>
+      <line x1='395' y1='210' x2='340' y2='150'/>
+      <line x1='395' y1='210' x2='450' y2='150'/>
+      <line x1='395' y1='210' x2='340' y2='260'/>
+      <line x1='395' y1='210' x2='450' y2='260'/>
+    </g>
+  </svg>`),
+  canal: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#f0e6d2'/>
+    <rect y='320' width='800' height='80' fill='#5a7a95'/>
+    <rect x='150' y='170' width='90' height='150' fill='#a5443a'/>
+    <polygon points='150,170 195,130 240,170' fill='#7a2f28'/>
+    <rect x='250' y='150' width='90' height='170' fill='#c9915a'/>
+    <polygon points='250,150 295,110 340,150' fill='#a5713e'/>
+    <rect x='350' y='190' width='90' height='130' fill='#8a6a4a'/>
+    <polygon points='350,190 395,150 440,190' fill='#5a4a35'/>
+  </svg>`),
+  stockholm: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#e6eef5'/>
+    <rect y='320' width='800' height='80' fill='#3d6e8f'/>
+    <rect x='200' y='190' width='60' height='130' fill='#a54a3a'/>
+    <rect x='280' y='150' width='70' height='170' fill='#8a3a2f'/>
+    <rect x='370' y='210' width='50' height='110' fill='#a54a3a'/>
+    <rect x='440' y='170' width='65' height='150' fill='#8a3a2f'/>
+    <rect x='520' y='200' width='55' height='120' fill='#a54a3a'/>
+  </svg>`),
+  lund: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#f5efe0'/>
+    <rect y='320' width='800' height='80' fill='#7a9560'/>
+    <rect x='340' y='180' width='120' height='140' fill='#c9a96a'/>
+    <polygon points='340,180 400,130 460,180' fill='#a5834a'/>
+    <rect x='390' y='230' width='20' height='90' fill='#7a5a3a'/>
+  </svg>`),
+  copenhagen: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#e0eef4'/>
+    <rect y='320' width='800' height='80' fill='#3d7a94'/>
+    <rect x='220' y='200' width='60' height='120' fill='#c9915a'/>
+    <rect x='290' y='170' width='55' height='150' fill='#a5713e'/>
+    <rect x='355' y='210' width='45' height='110' fill='#c9915a'/>
+    <path d='M480 300 Q500 260 530 280 Q550 260 560 290 Q540 320 480 300 Z' fill='#9db8c4'/>
+  </svg>`),
+  trinity: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#eaf4e6'/>
+    <rect y='320' width='800' height='80' fill='#3f6b3f'/>
+    <rect x='320' y='170' width='160' height='150' fill='#8a7a5a'/>
+    <rect x='370' y='120' width='60' height='60' fill='#6a5c40'/>
+    <rect x='390' y='80' width='20' height='45' fill='#6a5c40'/>
+  </svg>`),
+  ucd: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#e6f0e0'/>
+    <rect y='320' width='800' height='80' fill='#4a7a55'/>
+    <rect x='260' y='190' width='90' height='130' fill='#3a5a70'/>
+    <rect x='360' y='150' width='80' height='170' fill='#2c4658'/>
+    <rect x='450' y='200' width='80' height='120' fill='#3a5a70'/>
+  </svg>`),
+  edinburgh: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#d9dee6'/>
+    <polygon points='250,330 300,180 380,330' fill='#6a6a6a'/>
+    <rect x='330' y='150' width='50' height='90' fill='#5a5a5a'/>
+    <rect x='400' y='190' width='45' height='140' fill='#6a6a6a'/>
+    <rect y='330' width='800' height='70' fill='#4a5a4a'/>
+  </svg>`),
+  bigben: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#e0e6ee'/>
+    <rect y='330' width='800' height='70' fill='#5a7a95'/>
+    <rect x='370' y='120' width='60' height='210' fill='#8a7a5a'/>
+    <polygon points='370,120 400,80 430,120' fill='#6a5c40'/>
+    <circle cx='400' cy='160' r='16' fill='#f0e6c8'/>
+  </svg>`),
+  manchester: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#dfe3e6'/>
+    <rect y='330' width='800' height='70' fill='#5a5a5a'/>
+    <rect x='300' y='190' width='36' height='140' fill='#a5453a'/>
+    <rect x='360' y='150' width='40' height='180' fill='#8a3a2f'/>
+    <rect x='420' y='210' width='30' height='120' fill='#a5453a'/>
+  </svg>`),
+  tablemountain: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#e6f0f5'/>
+    <polygon points='200,300 260,150 560,150 620,300' fill='#7a6a55'/>
+    <rect y='300' width='800' height='100' fill='#4a7a55'/>
+  </svg>`),
+  saopaulo: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#fdeee0'/>
+    <rect y='320' width='800' height='80' fill='#8a6a4a'/>
+    <rect x='200' y='190' width='40' height='130' fill='#5a6b7a'/>
+    <rect x='260' y='150' width='45' height='170' fill='#4a5b6a'/>
+    <rect x='320' y='210' width='36' height='110' fill='#5a6b7a'/>
+    <rect x='380' y='120' width='55' height='200' fill='#3a4b5a'/>
+    <rect x='450' y='180' width='40' height='140' fill='#5a6b7a'/>
+    <rect x='510' y='160' width='45' height='160' fill='#4a5b6a'/>
+  </svg>`),
+  monterrey: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#fbe9d0'/>
+    <polygon points='250,320 320,180 400,320' fill='#a5875a'/>
+    <polygon points='380,320 450,140 540,320' fill='#8a6a4a'/>
+    <rect y='320' width='800' height='80' fill='#c9a96a'/>
+  </svg>`),
+  beirut: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#fdf0e0'/>
+    <rect y='330' width='800' height='70' fill='#3d7a94'/>
+    <path d='M400 330 L400 180 L370 180 L400 130 L430 180 L400 180' fill='#3f6b3f'/>
+    <path d='M400 180 L360 220 M400 200 L440 240 M400 220 L365 260' stroke='#3f6b3f' stroke-width='6'/>
+  </svg>`),
+  redsea: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#fbead2'/>
+    <circle cx='650' cy='100' r='55' fill='#f0a35a'/>
+    <path d='M0 260 Q200 230 400 255 T800 245 V400 H0 Z' fill='#d9b878'/>
+    <path d='M0 330 Q200 310 400 328 T800 320 V400 H0 Z' fill='#2b6a8f'/>
+  </svg>`),
+  vienna: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#fdf3e0'/>
+    <rect y='330' width='800' height='70' fill='#7a9560'/>
+    <rect x='280' y='210' width='240' height='120' fill='#d9b878'/>
+    <rect x='340' y='160' width='30' height='170' fill='#c9a45a'/>
+    <rect x='430' y='160' width='30' height='170' fill='#c9a45a'/>
+    <polygon points='340,160 355,130 370,160' fill='#a5824a'/>
+    <polygon points='430,160 445,130 460,160' fill='#a5824a'/>
+  </svg>`),
+  kremlin: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#f5e6da'/>
+    <rect y='330' width='800' height='70' fill='#8a3a2f'/>
+    <rect x='300' y='210' width='200' height='120' fill='#a5453a'/>
+    <ellipse cx='340' cy='190' rx='22' ry='30' fill='#d9a95a'/>
+    <ellipse cx='400' cy='170' rx='26' ry='36' fill='#3d7a5a'/>
+    <ellipse cx='460' cy='190' rx='22' ry='30' fill='#d9a95a'/>
+    <polygon points='400,120 400,134' stroke='#8a3a2f'/>
+  </svg>`),
+  msutower: svgUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400'>
+    <rect width='800' height='400' fill='#e6ecf2'/>
+    <rect y='330' width='800' height='70' fill='#4a5a70'/>
+    <rect x='350' y='230' width='100' height='100' fill='#8a7a5a'/>
+    <rect x='365' y='160' width='70' height='75' fill='#7a6c4e'/>
+    <rect x='378' y='110' width='44' height='55' fill='#6a5c40'/>
+    <polygon points='378,110 400,80 422,110' fill='#5a4c34'/>
+    <line x1='400' y1='80' x2='400' y2='60' stroke='#5a4c34' stroke-width='4'/>
+  </svg>`)
+};
+
+
 const RAW_UNIVERSITIES = [
   { name: 'Harvard University', domain: 'harvard.edu', country: 'США', countryCode: 'us', state: 'Массачусетс', city: 'Кембридж',
     minGPA: 3.9, minIELTS: 7.5, rate: 4, tuition: '$55,000 / год (Need-Blind Aid)',
@@ -340,231 +622,231 @@ const RAW_UNIVERSITIES = [
 
   { name: 'Tsinghua University', domain: 'tsinghua.edu.cn', country: 'Китай', countryCode: 'cn', state: null, city: 'Пекин',
     minGPA: 3.8, minIELTS: 6.5, rate: 2, tuition: '≈ ¥30,000 / год (для иностранцев)',
-    photo: null,
+    photo: SCN.greatwall1,
     description: 'Один из самых престижных технических университетов мира, часто называют "китайским MIT". Лидер по числу патентов и инженерных исследований в Азии.',
     facts: ['Крайне низкий процент поступления даже среди местных абитуриентов.', 'Сильнейшая инженерная и IT-школа континентального Китая.', 'Активно развивает программы на английском языке для иностранных студентов.'],
     majors: [ {name:'Engineering', share:26, top:true}, {name:'Computer Science', share:24}, {name:'Data Science & AI', share:16}, {name:'Business & Economics', share:12} ] },
 
   { name: 'Peking University', domain: 'pku.edu.cn', country: 'Китай', countryCode: 'cn', state: null, city: 'Пекин',
     minGPA: 3.8, minIELTS: 6.5, rate: 3, tuition: '≈ ¥33,000 / год (для иностранцев)',
-    photo: null,
+    photo: SCN.greatwall2,
     description: 'Старейший и один из самых престижных университетов Китая, известен сильными гуманитарными и естественнонаучными школами.',
     facts: ['Основан в 1898 году, считается символом современного китайского образования.', 'Сильная программа двойных дипломов с ведущими вузами Европы и США.', 'Один из лидеров по числу публикаций в топовых научных журналах в Азии.'],
     majors: [ {name:'Business & Economics', share:20, top:true}, {name:'Political Science / IR', share:16}, {name:'Computer Science', share:14}, {name:'Biology & Life Sciences', share:12} ] },
 
   { name: 'University of Tokyo', domain: 'u-tokyo.ac.jp', country: 'Япония', countryCode: 'jp', state: null, city: 'Токио',
     minGPA: 3.7, minIELTS: 6.5, rate: 24, tuition: '≈ ¥535,800 / год',
-    photo: null,
+    photo: SCN.fuji,
     description: 'Самый престижный университет Японии, лидер страны по числу нобелевских лауреатов и научных публикаций.',
     facts: ['Считается лучшим университетом Японии практически по всем мировым рейтингам.', 'Сильная традиция в инженерии, физике и медицине.', 'Государственные японские университеты предлагают одну из самых доступных стоимостей обучения среди топ-вузов мира.'],
     majors: [ {name:'Engineering', share:22, top:true}, {name:'Mathematics & Physics', share:18}, {name:'Medicine', share:14}, {name:'Computer Science', share:12} ] },
 
   { name: 'Kyoto University', domain: 'kyoto-u.ac.jp', country: 'Япония', countryCode: 'jp', state: null, city: 'Киото',
     minGPA: 3.6, minIELTS: 6.5, rate: 25, tuition: '≈ ¥535,800 / год',
-    photo: null,
+    photo: SCN.sakura,
     description: 'Второй по престижности университет Японии, известен свободой в организации учебного процесса и сильной исследовательской культурой.',
     facts: ['Больше нобелевских лауреатов, чем у любого другого университета Японии, кроме Токийского.', 'Известен неформальным, "вольным" студенческим духом кампуса.', 'Сильная научная школа в химии и фундаментальной физике.'],
     majors: [ {name:'Mathematics & Physics', share:20, top:true}, {name:'Biology & Life Sciences', share:16}, {name:'Engineering', share:14}, {name:'Medicine', share:12} ] },
 
   { name: 'Seoul National University', domain: 'snu.ac.kr', country: 'Южная Корея', countryCode: 'kr', state: null, city: 'Сеул',
     minGPA: 3.7, minIELTS: 6.5, rate: 15, tuition: '≈ ₩4,000,000 / семестр',
-    photo: null,
+    photo: SCN.hanok,
     description: 'Самый престижный университет Южной Кореи, лидер практически во всех академических рейтингах страны.',
     facts: ['Считается корейским аналогом Лиги Плюща по престижу диплома.', 'Сильная государственная поддержка исследований в инженерии и биотехнологиях.', 'Выпускники доминируют в топ-менеджменте крупнейших корейских корпораций.'],
     majors: [ {name:'Engineering', share:22, top:true}, {name:'Business & Economics', share:18}, {name:'Computer Science', share:14}, {name:'Medicine', share:12} ] },
 
   { name: 'KAIST', domain: 'kaist.ac.kr', country: 'Южная Корея', countryCode: 'kr', state: null, city: 'Тэджон',
     minGPA: 3.8, minIELTS: 6.5, rate: 12, tuition: '≈ $3,000 / год (большинство студентов на стипендиях)',
-    photo: null,
+    photo: SCN.modernkorea,
     description: 'Ведущий технический университет Кореи, полностью сфокусирован на инженерии, IT и естественных науках.',
     facts: ['Все занятия ведутся на английском языке.', 'Тесно сотрудничает с Samsung, LG и другими технологическими гигантами.', 'Большинство студентов обучается по государственным стипендиям.'],
     majors: [ {name:'Computer Science', share:28, top:true}, {name:'Engineering', share:26}, {name:'Data Science & AI', share:16}, {name:'Mathematics & Physics', share:10} ] },
 
   { name: 'Nanyang Technological University (NTU)', domain: 'ntu.edu.sg', country: 'Сингапур', countryCode: 'sg', state: null, city: 'Сингапур',
     minGPA: 3.7, minIELTS: 7.0, rate: 9, tuition: '≈ SGD $30,000 / год',
-    photo: null,
+    photo: SCN.marina,
     description: 'Один из самых быстрорастущих технических университетов мира, соперничает с NUS за звание лучшего вуза Сингапура.',
     facts: ['Один из самых молодых университетов в мировом топ-20 рейтингов.', 'Сильнейшая инженерная школа Юго-Восточной Азии.', 'Кампус считается одним из самых современных и "зелёных" в мире.'],
     majors: [ {name:'Engineering', share:24, top:true}, {name:'Computer Science', share:20}, {name:'Business & Economics', share:14}, {name:'Data Science & AI', share:12} ] },
 
   { name: 'University of Hong Kong (HKU)', domain: 'hku.hk', country: 'Гонконг', countryCode: 'hk', state: null, city: 'Гонконг',
     minGPA: 3.7, minIELTS: 7.0, rate: 10, tuition: '≈ HKD $215,000 / год',
-    photo: null,
+    photo: SCN.harbourHK1,
     description: 'Старейший и один из самых престижных университетов Гонконга, известен сильной юридической и медицинской школами.',
     facts: ['Обучение в основном на английском языке.', 'Один из главных финансовых и образовательных хабов Азии.', 'Сильные связи с международным банковским и юридическим сектором.'],
     majors: [ {name:'Business & Economics', share:22, top:true}, {name:'Law', share:16}, {name:'Medicine', share:14}, {name:'Computer Science', share:12} ] },
 
   { name: 'Hong Kong University of Science and Technology (HKUST)', domain: 'ust.hk', country: 'Гонконг', countryCode: 'hk', state: null, city: 'Гонконг',
     minGPA: 3.7, minIELTS: 7.0, rate: 11, tuition: '≈ HKD $170,000 / год',
-    photo: null,
+    photo: SCN.harbourHK2,
     description: 'Молодой, но крайне быстро выросший в престиже технический университет, специализируется на инженерии и бизнесе.',
     facts: ['Один из самых молодых университетов в мировом топ-50.', 'Сильная программа двойных дипломов по бизнесу с топ-школами США.', 'Активная стартап-экосистема кампуса.'],
     majors: [ {name:'Engineering', share:24, top:true}, {name:'Business & Economics', share:20}, {name:'Computer Science', share:18}, {name:'Data Science & AI', share:12} ] },
 
   { name: 'Indian Institute of Technology Bombay (IIT Bombay)', domain: 'iitb.ac.in', country: 'Индия', countryCode: 'in', state: 'Махараштра', city: 'Мумбаи',
     minGPA: 3.6, minIELTS: 6.5, rate: 1, tuition: '≈ ₹200,000 / год',
-    photo: null,
+    photo: SCN.gatewayindia,
     description: 'Один из самых престижных технических университетов Индии, попасть можно только через крайне сложный экзамен JEE Advanced.',
     facts: ['Один из самых низких процентов поступления среди технических вузов мира.', 'Выпускники занимают руководящие позиции в Google, Microsoft и крупнейших индийских корпорациях.', 'Обучение ведётся полностью на английском языке.'],
     majors: [ {name:'Engineering', share:30, top:true}, {name:'Computer Science', share:26}, {name:'Data Science & AI', share:14}, {name:'Mathematics & Physics', share:10} ] },
 
   { name: 'Indian Institute of Technology Delhi (IIT Delhi)', domain: 'iitd.ac.in', country: 'Индия', countryCode: 'in', state: 'Дели', city: 'Нью-Дели',
     minGPA: 3.6, minIELTS: 6.5, rate: 1, tuition: '≈ ₹200,000 / год',
-    photo: null,
+    photo: SCN.indiagate,
     description: 'Один из ведущих технических университетов Индии, входит в число самых селективных вузов мира по проценту поступления.',
     facts: ['Приём производится централизованно через экзамен JEE Advanced.', 'Сильная инженерная и предпринимательская экосистема.', 'Один из лидеров технологических стартапов Индии среди выпускников.'],
     majors: [ {name:'Engineering', share:28, top:true}, {name:'Computer Science', share:26}, {name:'Data Science & AI', share:16}, {name:'Mathematics & Physics', share:10} ] },
 
   { name: 'Sciences Po', domain: 'sciencespo.fr', country: 'Франция', countryCode: 'fr', state: null, city: 'Париж',
     minGPA: 3.5, minIELTS: 7.0, rate: 17, tuition: '≈ €14,000 / год (зависит от дохода семьи)',
-    photo: null,
+    photo: SCN.eiffel,
     description: 'Ведущая французская школа социальных и политических наук, кузница дипломатов, политиков и журналистов.',
     facts: ['Среди выпускников — множество президентов Франции и глав международных организаций.', 'Стоимость обучения зависит от дохода семьи студента.', 'Сильнейшая программа по международным отношениям в континентальной Европе.'],
     majors: [ {name:'Political Science / IR', share:32, top:true}, {name:'Law', share:16}, {name:'Business & Economics', share:14}, {name:'Design & Architecture', share:8} ] },
 
   { name: 'Sorbonne University', domain: 'sorbonne-universite.fr', country: 'Франция', countryCode: 'fr', state: null, city: 'Париж',
     minGPA: 3.4, minIELTS: 6.5, rate: 40, tuition: '≈ €3,770 / год (гос. тариф)',
-    photo: null,
+    photo: SCN.notredame,
     description: 'Один из старейших университетов мира, наследник средневекового парижского университета, силён в гуманитарных и естественных науках.',
     facts: ['Исторические корни восходят к XIII веку.', 'Государственные французские вузы — один из самых доступных вариантов обучения в Европе.', 'Расположен в самом центре Латинского квартала Парижа.'],
     majors: [ {name:'Biology & Life Sciences', share:18, top:true}, {name:'Mathematics & Physics', share:16}, {name:'Political Science / IR', share:12}, {name:'Medicine', share:10} ] },
 
   { name: 'Bocconi University', domain: 'unibocconi.it', country: 'Италия', countryCode: 'it', state: null, city: 'Милан',
     minGPA: 3.6, minIELTS: 7.0, rate: 18, tuition: '≈ €14,000 / год (зависит от дохода семьи)',
-    photo: null,
+    photo: SCN.duomo1,
     description: 'Ведущая бизнес-школа Италии и одна из сильнейших в Европе, известна тесными связями с международным финансовым сектором.',
     facts: ['Считается итальянским эквивалентом London Business School.', 'Стоимость обучения гибко зависит от финансового положения семьи.', 'Сильные карьерные связи с инвестбанками Лондона и Милана.'],
     majors: [ {name:'Business & Economics', share:34, top:true}, {name:'Data Science & AI', share:14}, {name:'Political Science / IR', share:12}, {name:'Law', share:8} ] },
 
   { name: 'Politecnico di Milano', domain: 'polimi.it', country: 'Италия', countryCode: 'it', state: null, city: 'Милан',
     minGPA: 3.4, minIELTS: 6.0, rate: 35, tuition: '≈ €3,900 / год (зависит от дохода семьи)',
-    photo: null,
+    photo: SCN.duomo2,
     description: 'Ведущий технический университет Италии, особенно силён в архитектуре, дизайне и инженерии.',
     facts: ['Одна из сильнейших в мире школ промышленного дизайна.', 'Стоимость обучения одна из самых доступных среди топовых технических вузов Европы.', 'Тесно связан с итальянской автомобильной и дизайнерской индустрией.'],
     majors: [ {name:'Engineering', share:26, top:true}, {name:'Design & Architecture', share:22}, {name:'Computer Science', share:14}, {name:'Mathematics & Physics', share:10} ] },
 
   { name: 'Delft University of Technology (TU Delft)', domain: 'tudelft.nl', country: 'Нидерланды', countryCode: 'nl', state: null, city: 'Делфт',
     minGPA: 3.5, minIELTS: 6.5, rate: 35, tuition: '≈ €18,000 / год (для не-ЕС)',
-    photo: null,
+    photo: SCN.windmill,
     description: 'Крупнейший и самый престижный технический университет Нидерландов, известен сильной программой по инженерии и архитектуре.',
     facts: ['Родина многих инноваций в области водного строительства и гидротехники.', 'Тесно сотрудничает с крупнейшими европейскими инженерными компаниями.', 'Один из лидеров в исследованиях устойчивой энергетики в Европе.'],
     majors: [ {name:'Engineering', share:30, top:true}, {name:'Computer Science', share:18}, {name:'Design & Architecture', share:16}, {name:'Mathematics & Physics', share:10} ] },
 
   { name: 'University of Amsterdam', domain: 'uva.nl', country: 'Нидерланды', countryCode: 'nl', state: null, city: 'Амстердам',
     minGPA: 3.4, minIELTS: 6.5, rate: 40, tuition: '≈ €15,000 / год (для не-ЕС)',
-    photo: null,
+    photo: SCN.canal,
     description: 'Один из крупнейших исследовательских университетов Европы, силён в социальных науках, экономике и медиа.',
     facts: ['Один из самых интернациональных студенческих городов Европы.', 'Много программ преподаётся полностью на английском языке.', 'Расположен в самом центре одного из самых популярных городов Европы у студентов.'],
     majors: [ {name:'Business & Economics', share:20, top:true}, {name:'Political Science / IR', share:16}, {name:'Psychology', share:14}, {name:'Data Science & AI', share:10} ] },
 
   { name: 'KTH Royal Institute of Technology', domain: 'kth.se', country: 'Швеция', countryCode: 'se', state: null, city: 'Стокгольм',
     minGPA: 3.5, minIELTS: 6.5, rate: 20, tuition: '≈ SEK 180,000 / год (для не-ЕС)',
-    photo: null,
+    photo: SCN.stockholm,
     description: 'Крупнейший технический университет Швеции, известен сильными программами в IT, инженерии и устойчивом развитии.',
     facts: ['Один из ведущих технических вузов Северной Европы.', 'Тесно связан с технологической экосистемой Стокгольма (родина Spotify, Klarna).', 'Активная программа обменов с ведущими техническими вузами мира.'],
     majors: [ {name:'Engineering', share:26, top:true}, {name:'Computer Science', share:22}, {name:'Data Science & AI', share:14}, {name:'Mathematics & Physics', share:10} ] },
 
   { name: 'Lund University', domain: 'lu.se', country: 'Швеция', countryCode: 'se', state: null, city: 'Лунд',
     minGPA: 3.4, minIELTS: 6.5, rate: 25, tuition: '≈ SEK 150,000 / год (для не-ЕС)',
-    photo: null,
+    photo: SCN.lund,
     description: 'Один из старейших и самых престижных университетов Скандинавии, силён в широком спектре дисциплин от права до инженерии.',
     facts: ['Основан в 1666 году.', 'Один из самых популярных университетов Швеции среди иностранных студентов.', 'Уютный студенческий город с богатой академической традицией.'],
     majors: [ {name:'Business & Economics', share:16, top:true}, {name:'Engineering', share:16}, {name:'Law', share:12}, {name:'Political Science / IR', share:10} ] },
 
   { name: 'University of Copenhagen', domain: 'ku.dk', country: 'Дания', countryCode: 'dk', state: null, city: 'Копенгаген',
     minGPA: 3.4, minIELTS: 6.5, rate: 30, tuition: '≈ DKK 200,000 / год (для не-ЕС)',
-    photo: null,
+    photo: SCN.copenhagen,
     description: 'Крупнейший университет Дании, силён в медицине, естественных науках и социальных исследованиях.',
     facts: ['Один из старейших университетов Северной Европы, основан в 1479 году.', 'Сильная научная традиция в физике и биомедицине.', 'Копенгаген регулярно входит в топ самых комфортных для жизни городов мира.'],
     majors: [ {name:'Medicine', share:18, top:true}, {name:'Biology & Life Sciences', share:16}, {name:'Political Science / IR', share:12}, {name:'Law', share:10} ] },
 
   { name: 'Trinity College Dublin', domain: 'tcd.ie', country: 'Ирландия', countryCode: 'ie', state: null, city: 'Дублин',
     minGPA: 3.5, minIELTS: 6.5, rate: 28, tuition: '≈ €25,000 / год',
-    photo: null,
+    photo: SCN.trinity,
     description: 'Старейший университет Ирландии, известен своей исторической библиотекой и сильной гуманитарной школой.',
     facts: ['Основан в 1592 году королевой Елизаветой I.', 'Хранит знаменитую средневековую рукопись Book of Kells.', 'Ирландия — популярное направление благодаря англоязычному обучению и близости к ЕС.'],
     majors: [ {name:'Business & Economics', share:16, top:true}, {name:'Computer Science', share:14}, {name:'Law', share:12}, {name:'Medicine', share:10} ] },
 
   { name: 'University College Dublin (UCD)', domain: 'ucd.ie', country: 'Ирландия', countryCode: 'ie', state: null, city: 'Дублин',
     minGPA: 3.4, minIELTS: 6.5, rate: 32, tuition: '≈ €24,000 / год',
-    photo: null,
+    photo: SCN.ucd,
     description: 'Крупнейший университет Ирландии, известен сильной бизнес-школой и тесными связями с технологическими компаниями Дублина.',
     facts: ['Дублин — европейский офисный хаб Google, Facebook и других техгигантов.', 'Одна из крупнейших ирландских бизнес-школ (Smurfit).', 'Активная программа стажировок с международными компаниями.'],
     majors: [ {name:'Business & Economics', share:18, top:true}, {name:'Computer Science', share:16}, {name:'Engineering', share:12}, {name:'Law', share:10} ] },
 
   { name: 'University of Edinburgh', domain: 'ed.ac.uk', country: 'Великобритания', countryCode: 'gb', state: null, city: 'Эдинбург',
     minGPA: 3.6, minIELTS: 6.5, rate: 40, tuition: '≈ £26,000 / год',
-    photo: null,
+    photo: SCN.edinburgh,
     description: 'Один из старейших и самых престижных университетов Шотландии, силён в медицине, науках о данных и гуманитарных дисциплинах.',
     facts: ['Основан в 1583 году, один из старейших вузов англоязычного мира.', 'Здесь учился и работал Чарльз Дарвин.', 'Один из самых атмосферных студенческих городов Европы.'],
     majors: [ {name:'Medicine', share:16, top:true}, {name:'Data Science & AI', share:14}, {name:'Business & Economics', share:12}, {name:'Psychology', share:10} ] },
 
   { name: "King's College London", domain: 'kcl.ac.uk', country: 'Великобритания', countryCode: 'gb', state: null, city: 'Лондон',
     minGPA: 3.5, minIELTS: 7.0, rate: 13, tuition: '≈ £28,000 / год',
-    photo: null,
+    photo: SCN.bigben,
     description: 'Один из основателей Лондонского университета, известен сильной медицинской и юридической школами в самом центре Лондона.',
     facts: ['Одна из старейших медицинских школ Великобритании.', 'Расположен в самом центре Лондона, рядом с парламентом и Темзой.', 'Сильные связи с NHS (Национальной службой здравоохранения Великобритании).'],
     majors: [ {name:'Medicine', share:18, top:true}, {name:'Law', share:14}, {name:'Political Science / IR', share:12}, {name:'Business & Economics', share:10} ] },
 
   { name: 'University of Manchester', domain: 'manchester.ac.uk', country: 'Великобритания', countryCode: 'gb', state: null, city: 'Манчестер',
     minGPA: 3.4, minIELTS: 6.5, rate: 56, tuition: '≈ £26,000 / год',
-    photo: null,
+    photo: SCN.manchester,
     description: 'Один из крупнейших исследовательских университетов Великобритании, известен сильной инженерной и научной школой.',
     facts: ['Здесь был расщеплён атом Эрнестом Резерфордом.', 'Один из крупнейших студенческих городов Великобритании.', 'Сильная программа по материаловедению — родина графена.'],
     majors: [ {name:'Engineering', share:18, top:true}, {name:'Business & Economics', share:16}, {name:'Computer Science', share:12}, {name:'Biology & Life Sciences', share:10} ] },
 
   { name: 'University of Cape Town', domain: 'uct.ac.za', country: 'ЮАР', countryCode: 'za', state: null, city: 'Кейптаун',
     minGPA: 3.2, minIELTS: 6.5, rate: 20, tuition: '≈ $8,000 / год (для иностранцев)',
-    photo: null,
+    photo: SCN.tablemountain,
     description: 'Самый престижный университет Африки, лидер континента по большинству мировых рейтингов.',
     facts: ['Постоянно занимает первое место среди африканских университетов в мировых рейтингах.', 'Расположен у подножия горы Столовая гора — один из самых живописных кампусов мира.', 'Сильная программа по медицине и наукам об окружающей среде.'],
     majors: [ {name:'Business & Economics', share:16, top:true}, {name:'Medicine', share:14}, {name:'Law', share:12}, {name:'Engineering', share:10} ] },
 
   { name: 'University of São Paulo (USP)', domain: 'usp.br', country: 'Бразилия', countryCode: 'br', state: 'Сан-Паулу', city: 'Сан-Паулу',
     minGPA: 3.3, minIELTS: 6.0, rate: 10, tuition: 'Бесплатно для местных студентов, спецпрограммы для иностранцев',
-    photo: null,
+    photo: SCN.saopaulo,
     description: 'Крупнейший и самый престижный университет Латинской Америки, силён практически во всех областях науки.',
     facts: ['Постоянно занимает 1 место среди университетов Латинской Америки.', 'Государственное образование в Бразилии бесплатно даже на топовом уровне.', 'Один из крупнейших исследовательских центров Южного полушария.'],
     majors: [ {name:'Engineering', share:18, top:true}, {name:'Medicine', share:16}, {name:'Law', share:12}, {name:'Business & Economics', share:10} ] },
 
   { name: 'Tecnológico de Monterrey', domain: 'tec.mx', country: 'Мексика', countryCode: 'mx', state: 'Нуэво-Леон', city: 'Монтеррей',
     minGPA: 3.4, minIELTS: 6.5, rate: 65, tuition: '≈ $9,000 / год',
-    photo: null,
+    photo: SCN.monterrey,
     description: 'Ведущий частный технический университет Латинской Америки, известен тесными связями с международным бизнесом.',
     facts: ['Один из самых предпринимательских университетов Латинской Америки.', 'Сильные партнёрства с MIT и другими техническими вузами США.', 'Множество кампусов по всей Мексике, объединённых в единую систему.'],
     majors: [ {name:'Business & Economics', share:20, top:true}, {name:'Engineering', share:18}, {name:'Computer Science', share:14}, {name:'Design & Architecture', share:10} ] },
 
   { name: 'American University of Beirut (AUB)', domain: 'aub.edu.lb', country: 'Ливан', countryCode: 'lb', state: null, city: 'Бейрут',
     minGPA: 3.3, minIELTS: 6.5, rate: 40, tuition: '≈ $20,000 / год',
-    photo: null,
+    photo: SCN.beirut,
     description: 'Старейший американский по модели университет на Ближнем Востоке, известен сильной медицинской школой.',
     facts: ['Основан в 1866 году американскими миссионерами.', 'Обучение полностью на английском языке по американской модели.', 'Один из самых уважаемых вузов арабского мира.'],
     majors: [ {name:'Medicine', share:18, top:true}, {name:'Business & Economics', share:16}, {name:'Engineering', share:12}, {name:'Political Science / IR', share:10} ] },
 
   { name: 'KAUST (King Abdullah University of Science and Technology)', domain: 'kaust.edu.sa', country: 'Саудовская Аравия', countryCode: 'sa', state: null, city: 'Тувал',
     minGPA: 3.6, minIELTS: 6.5, rate: 3, tuition: 'Полностью покрывается стипендией для всех студентов',
-    photo: null,
+    photo: SCN.redsea,
     description: 'Исследовательский университет для магистратуры и PhD, полностью финансируемый государством — обучение бесплатно для всех принятых студентов.',
     facts: ['Все принятые студенты получают полную стипендию, включая проживание.', 'Кампус построен "с нуля" как международный исследовательский хаб.', 'Один из самых щедро финансируемых университетов мира на одного студента.'],
     majors: [ {name:'Engineering', share:28, top:true}, {name:'Data Science & AI', share:22}, {name:'Biology & Life Sciences', share:16}, {name:'Mathematics & Physics', share:12} ] },
 
   { name: 'University of Vienna', domain: 'univie.ac.at', country: 'Австрия', countryCode: 'at', state: null, city: 'Вена',
     minGPA: 3.2, minIELTS: 6.5, rate: 70, tuition: '≈ €1,500 / год (для не-ЕС)',
-    photo: null,
+    photo: SCN.vienna,
     description: 'Старейший университет немецкоязычного мира, известен сильной гуманитарной и естественнонаучной традицией.',
     facts: ['Основан в 1365 году.', 'Один из самых доступных по стоимости университетов Западной Европы.', 'Тесно связан с богатой музыкальной и философской традицией Вены.'],
     majors: [ {name:'Psychology', share:14, top:true}, {name:'Biology & Life Sciences', share:12}, {name:'Political Science / IR', share:12}, {name:'Law', share:10} ] },
 
   { name: 'HSE University (Высшая школа экономики)', domain: 'hse.ru', country: 'Россия', countryCode: 'ru', state: null, city: 'Москва',
     minGPA: 3.6, minIELTS: 6.5, rate: 20, tuition: '≈ ₽500,000 / год',
-    photo: null,
+    photo: SCN.kremlin,
     description: 'Один из самых современных и быстрорастущих университетов России, известен сильной экономической и IT-школой.',
     facts: ['Один из самых востребованных вузов России среди работодателей.', 'Активно развивает программы двойных дипломов с зарубежными вузами.', 'Сильная связь с технологическим и финансовым сектором Москвы.'],
     majors: [ {name:'Business & Economics', share:24, top:true}, {name:'Computer Science', share:20}, {name:'Data Science & AI', share:16}, {name:'Political Science / IR', share:10} ] },
 
   { name: 'Lomonosov Moscow State University (МГУ)', domain: 'msu.ru', country: 'Россия', countryCode: 'ru', state: null, city: 'Москва',
     minGPA: 3.7, minIELTS: 6.5, rate: 15, tuition: '≈ ₽450,000 / год',
-    photo: null,
+    photo: SCN.msutower,
     description: 'Старейший и самый престижный университет России, лидер практически во всех академических рейтингах страны.',
     facts: ['Основан в 1755 году.', 'Главное здание МГУ — одна из знаменитых "сталинских высоток" Москвы.', 'Сильнейшая фундаментальная научная школа в физике и математике.'],
     majors: [ {name:'Mathematics & Physics', share:20, top:true}, {name:'Biology & Life Sciences', share:14}, {name:'Law', share:12}, {name:'Political Science / IR', share:10} ] }
