@@ -467,6 +467,7 @@ const SCN = {
 
 const RAW_UNIVERSITIES = [
   { name: 'Harvard University', domain: 'harvard.edu', country: 'США', countryCode: 'us', state: 'Массачусетс', city: 'Кембридж',
+    system: 'us', livingCost: '≈ $18,000 / год (общежитие + питание)',
     minGPA: 3.9, minIELTS: 7.5, rate: 4, tuition: '$55,000 / год (Need-Blind Aid)',
     photo: 'https://images.unsplash.com/photo-1580537659466-0a9bfa916a54?auto=format&fit=crop&w=800&q=80',
     description: 'Старейший вуз США (основан в 1636 г.) и член знаменитой Лиги Плюща. Признан мировым лидером в области научных исследований, бизнеса, права и медицины.',
@@ -474,6 +475,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:24, top:true, note:'Самая выбираемая программа, тесная связь с Уолл-стрит и консалтингом.'}, {name:'Computer Science', share:20, note:'Быстрорастущее направление, партнёрство с MIT.'}, {name:'Political Science / IR', share:12}, {name:'Biology & Life Sciences', share:10} ] },
 
   { name: 'MIT', domain: 'mit.edu', country: 'США', countryCode: 'us', state: 'Массачусетс', city: 'Кембридж',
+    system: 'us', livingCost: '≈ $18,000 / год (общежитие + питание)',
     minGPA: 3.9, minIELTS: 7.5, rate: 4, tuition: '$60,000 / год',
     photo: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80',
     description: 'Мировой лидер в инженерии и точных науках. Учебный процесс построен вокруг практических проектов и исследовательских лабораторий с первого курса.',
@@ -481,6 +483,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Computer Science', share:32, top:true, note:'Флагманская программа, тесно связана с исследованиями в области ИИ.'}, {name:'Engineering', share:28}, {name:'Mathematics & Physics', share:15}, {name:'Data Science & AI', share:12} ] },
 
   { name: 'Stanford University', domain: 'stanford.edu', country: 'США', countryCode: 'us', state: 'Калифорния', city: 'Стэнфорд',
+    system: 'us', livingCost: '≈ $19,000 / год (общежитие + питание)',
     minGPA: 3.9, minIELTS: 7.5, rate: 4, tuition: '$55,000 / год (Need-Blind Aid)',
     photo: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80',
     description: 'Расположен в самом сердце Кремниевой долины. Известен своей предпринимательской культурой, передовыми IT-программами и тесными связями с технологическими гигантами.',
@@ -488,6 +491,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Computer Science', share:30, top:true, note:'Главный драйвер репутации университета, эпицентр Кремниевой долины.'}, {name:'Engineering', share:22}, {name:'Data Science & AI', share:18}, {name:'Business & Economics', share:12} ] },
 
   { name: 'UC Berkeley', domain: 'berkeley.edu', country: 'США', countryCode: 'us', state: 'Калифорния', city: 'Беркли',
+    system: 'us', livingCost: '≈ $17,500 / год',
     minGPA: 3.8, minIELTS: 7.0, rate: 11, tuition: '≈ $45,000 / год (для иностранцев)',
     photo: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=800&q=80',
     description: 'Флагман системы University of California. Один из сильнейших государственных университетов мира с мощной инженерной и IT-школой.',
@@ -495,6 +499,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Computer Science', share:26, top:true}, {name:'Engineering', share:20}, {name:'Business & Economics', share:16}, {name:'Data Science & AI', share:14} ] },
 
   { name: 'Caltech', domain: 'caltech.edu', country: 'США', countryCode: 'us', state: 'Калифорния', city: 'Пасадена',
+    system: 'us', livingCost: '≈ $16,000 / год',
     minGPA: 3.95, minIELTS: 7.5, rate: 3, tuition: '≈ $60,000 / год',
     photo: 'https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=800&q=80',
     description: 'Самый маленький и самый селективный технический университет США. Обучается всего около 1000 бакалавров, что создаёт крайне тесное академическое сообщество.',
@@ -502,20 +507,23 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Engineering', share:30, top:true}, {name:'Mathematics & Physics', share:28}, {name:'Computer Science', share:24}, {name:'Data Science & AI', share:10} ] },
 
   { name: 'Yale University', domain: 'yale.edu', country: 'США', countryCode: 'us', state: 'Коннектикут', city: 'Нью-Хейвен',
+    system: 'us', livingCost: '≈ $16,500 / год',
     minGPA: 3.9, minIELTS: 7.5, rate: 5, tuition: '≈ $62,000 / год (Need-Blind Aid)',
-    photo: 'https://images.unsplash.com/photo-1607237138185-eb5be6a49f6c?auto=format&fit=crop&w=800&q=80',
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Yale_University_Old_Campus.JPG?width=800',
     description: 'Один из старейших университетов США, известен сильнейшей гуманитарной школой, театральной программой и системой резиденциальных колледжей.',
     facts: ['Основан в 1701 году, входит в тройку старейших вузов страны.', 'Обладает одной из крупнейших университетских художественных коллекций в мире.', 'Среди выпускников 5 президентов США.'],
     majors: [ {name:'Business & Economics', share:22, top:true}, {name:'Political Science / IR', share:16}, {name:'Biology & Life Sciences', share:14}, {name:'Law', share:10} ] },
 
   { name: 'Princeton University', domain: 'princeton.edu', country: 'США', countryCode: 'us', state: 'Нью-Джерси', city: 'Принстон',
+    system: 'us', livingCost: '≈ $17,000 / год',
     minGPA: 3.9, minIELTS: 7.5, rate: 4, tuition: '≈ $58,000 / год (Need-Blind Aid)',
-    photo: 'https://images.unsplash.com/photo-1541829070764-84a7d30dd3f5?auto=format&fit=crop&w=800&q=80',
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Nassau_Hall_Princeton.JPG?width=800',
     description: 'Один из вузов Лиги Плюща с сильнейшим упором на бакалавриат и обязательной дипломной работой (senior thesis) для каждого студента.',
     facts: ['Не имеет медицинской и бизнес-школы — весь фокус на бакалавриате.', 'Один из крупнейших эндаументов на одного студента в мире.', 'Кампус признан одним из самых красивых в США.'],
     majors: [ {name:'Business & Economics', share:20, top:true}, {name:'Computer Science', share:18}, {name:'Engineering', share:14}, {name:'Political Science / IR', share:12} ] },
 
   { name: 'Columbia University', domain: 'columbia.edu', country: 'США', countryCode: 'us', state: 'Нью-Йорк', city: 'Нью-Йорк',
+    system: 'us', livingCost: '≈ $22,000 / год (один из самых дорогих городов США)',
     minGPA: 3.85, minIELTS: 7.5, rate: 4, tuition: '≈ $68,000 / год',
     photo: 'https://images.unsplash.com/photo-1496307653780-42ee777d4833?auto=format&fit=crop&w=800&q=80',
     description: 'Университет Лиги Плюща в самом центре Манхэттена, знаменит программой Core Curriculum и сильнейшей журналистской школой.',
@@ -523,6 +531,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:20, top:true}, {name:'Political Science / IR', share:16}, {name:'Computer Science', share:15}, {name:'Law', share:10} ] },
 
   { name: 'New York University (NYU)', domain: 'nyu.edu', country: 'США', countryCode: 'us', state: 'Нью-Йорк', city: 'Нью-Йорк',
+    system: 'us', livingCost: '≈ $22,000 / год (один из самых дорогих городов США)',
     minGPA: 3.7, minIELTS: 7.5, rate: 12, tuition: '$58,000 / год',
     photo: 'https://images.unsplash.com/photo-1541336032412-2048a678540d?auto=format&fit=crop&w=800&q=80',
     description: 'Глобальный университет с главным кампусом в престижном районе Манхэттена (Гринвич-Виллидж). Делает упор на международное образование и практический опыт в мегаполисе.',
@@ -530,6 +539,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:22, top:true}, {name:'Design & Architecture', share:14}, {name:'Computer Science', share:14}, {name:'Political Science / IR', share:10} ] },
 
   { name: 'University of Chicago', domain: 'uchicago.edu', country: 'США', countryCode: 'us', state: 'Иллинойс', city: 'Чикаго',
+    system: 'us', livingCost: '≈ $16,000 / год',
     minGPA: 3.85, minIELTS: 7.5, rate: 5, tuition: '≈ $65,000 / год',
     photo: 'https://images.unsplash.com/photo-1494783367193-149034c05e8f?auto=format&fit=crop&w=800&q=80',
     description: 'Известен строгим академическим духом, сильнейшей экономической школой (родина Chicago School of Economics) и обязательным широким гуманитарным ядром.',
@@ -537,6 +547,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:24, top:true}, {name:'Mathematics & Physics', share:16}, {name:'Political Science / IR', share:14}, {name:'Computer Science', share:12} ] },
 
   { name: 'University of Oxford', domain: 'ox.ac.uk', country: 'Великобритания', countryCode: 'gb', state: null, city: 'Оксфорд',
+    system: 'uk', livingCost: '≈ £12,500 / год',
     minGPA: 3.8, minIELTS: 7.5, rate: 12, tuition: '£38,000 / год',
     photo: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80',
     description: 'Старейший англоязычный университет в мире. Уникален своей системой независимых колледжей и индивидуальными занятиями (тьюториалами), где преподаватель работает с 1-2 студентами.',
@@ -544,6 +555,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Political Science / IR', share:18, top:true}, {name:'Business & Economics', share:16}, {name:'Law', share:14}, {name:'Medicine', share:12} ] },
 
   { name: 'University of Cambridge', domain: 'cam.ac.uk', country: 'Великобритания', countryCode: 'gb', state: null, city: 'Кембридж',
+    system: 'uk', livingCost: '≈ £13,000 / год (общежитие + питание)',
     minGPA: 3.85, minIELTS: 7.5, rate: 13, tuition: '£35,000 / год',
     photo: 'https://images.unsplash.com/photo-1526129318478-62ed807ebdf9?auto=format&fit=crop&w=800&q=80',
     description: 'Вечный соперник Оксфорда, лидирует в точных науках, математике и инженерии. Также построен вокруг системы независимых колледжей.',
@@ -551,6 +563,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Mathematics & Physics', share:20, top:true}, {name:'Engineering', share:16}, {name:'Computer Science', share:14}, {name:'Medicine', share:12} ] },
 
   { name: 'Imperial College London', domain: 'imperial.ac.uk', country: 'Великобритания', countryCode: 'gb', state: null, city: 'Лондон',
+    system: 'uk', livingCost: '≈ £16,000 / год (самый дорогой город Великобритании)',
     minGPA: 3.75, minIELTS: 7.0, rate: 11, tuition: '£38,000 / год',
     photo: 'https://images.unsplash.com/photo-1543832923-44667a44c804?auto=format&fit=crop&w=800&q=80',
     description: 'Технический вуз мирового уровня, специализирующийся исключительно на науке, инженерии, медицине и бизнесе — без гуманитарных факультетов.',
@@ -558,6 +571,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Engineering', share:26, top:true}, {name:'Computer Science', share:22}, {name:'Medicine', share:18}, {name:'Mathematics & Physics', share:14} ] },
 
   { name: 'London School of Economics (LSE)', domain: 'lse.ac.uk', country: 'Великобритания', countryCode: 'gb', state: null, city: 'Лондон',
+    system: 'uk', livingCost: '≈ £16,000 / год (самый дорогой город Великобритании)',
     minGPA: 3.75, minIELTS: 7.0, rate: 8, tuition: '£25,000 / год',
     photo: 'https://images.unsplash.com/photo-1520986606214-8b456906c813?auto=format&fit=crop&w=800&q=80',
     description: 'Один из ведущих в мире вузов по экономике, политологии и социальным наукам, расположен в самом центре Лондона.',
@@ -565,6 +579,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:30, top:true}, {name:'Political Science / IR', share:22}, {name:'Law', share:14}, {name:'Data Science & AI', share:10} ] },
 
   { name: 'University of Toronto', domain: 'utoronto.ca', country: 'Канада', countryCode: 'ca', state: 'Онтарио', city: 'Торонто',
+    system: 'canada', livingCost: '≈ CAD $16,000 / год',
     minGPA: 3.6, minIELTS: 7.0, rate: 40, tuition: 'CAD $45,000 / год',
     photo: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=800&q=80',
     description: 'Крупнейший и самый престижный исследовательский университет Канады. Мировой центр в области медицины, инженерии и развития искусственного интеллекта.',
@@ -572,6 +587,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Computer Science', share:20, top:true}, {name:'Business & Economics', share:16}, {name:'Engineering', share:14}, {name:'Biology & Life Sciences', share:12} ] },
 
   { name: 'McGill University', domain: 'mcgill.ca', country: 'Канада', countryCode: 'ca', state: 'Квебек', city: 'Монреаль',
+    system: 'canada', livingCost: '≈ CAD $13,000 / год',
     minGPA: 3.5, minIELTS: 6.5, rate: 46, tuition: 'CAD $35,000 / год',
     photo: 'https://images.unsplash.com/photo-1519832979-6fa011b87667?auto=format&fit=crop&w=800&q=80',
     description: 'Один из самых престижных университетов Канады, часто называемый "Гарвардом Севера". Расположен в двуязычном Монреале.',
@@ -579,20 +595,23 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:18, top:true}, {name:'Biology & Life Sciences', share:16}, {name:'Political Science / IR', share:12}, {name:'Engineering', share:10} ] },
 
   { name: 'University of British Columbia (UBC)', domain: 'ubc.ca', country: 'Канада', countryCode: 'ca', state: 'Британская Колумбия', city: 'Ванкувер',
+    system: 'canada', livingCost: '≈ CAD $17,000 / год',
     minGPA: 3.5, minIELTS: 6.5, rate: 52, tuition: 'CAD $40,000 / год',
-    photo: 'https://images.unsplash.com/photo-1590595406042-6f8dc2b3f1e6?auto=format&fit=crop&w=800&q=80',
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/University_of_British_Columbia_as_seen_from_the_new_SUB.JPG?width=800',
     description: 'Один из крупнейших исследовательских университетов Канады с потрясающим кампусом на побережье Тихого океана.',
     facts: ['Кампус расположен на полуострове с видом на океан и горы.', 'Сильная программа по лесным и природным наукам благодаря уникальному расположению.', 'Один из самых мультикультурных студенческих городков Северной Америки.'],
     majors: [ {name:'Business & Economics', share:18, top:true}, {name:'Computer Science', share:16}, {name:'Biology & Life Sciences', share:14}, {name:'Engineering', share:12} ] },
 
   { name: 'ETH Zurich', domain: 'ethz.ch', country: 'Швейцария', countryCode: 'ch', state: null, city: 'Цюрих',
+    system: 'europe', livingCost: '≈ CHF 18,000 / год (один из самых дорогих городов мира)',
     minGPA: 3.7, minIELTS: 7.0, rate: 27, tuition: '≈ CHF 1,500 / год',
-    photo: 'https://images.unsplash.com/photo-1592407637319-93aca5a49cc7?auto=format&fit=crop&w=800&q=80',
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/ETH_Zurich,_Swiss_Federal_Institute_of_Technology,_Zurich_University_(Ank_Kumar)_06.jpg?width=800',
     description: 'Один из сильнейших технических университетов мира с одной из самых низких стоимостей обучения среди топ-вузов планеты.',
     facts: ['Здесь учился и работал Альберт Эйнштейн.', 'Стоимость обучения — одна из самых низких в мире для вуза такого уровня.', 'Постоянно входит в топ-10 мировых рейтингов по инженерии и IT.'],
     majors: [ {name:'Engineering', share:28, top:true}, {name:'Computer Science', share:24}, {name:'Mathematics & Physics', share:18}, {name:'Data Science & AI', share:14} ] },
 
   { name: 'Technical University of Munich', domain: 'tum.de', country: 'Германия', countryCode: 'de', state: 'Бавария', city: 'Мюнхен',
+    system: 'europe', livingCost: '≈ €12,000 / год',
     minGPA: 3.5, minIELTS: 6.5, rate: 8, tuition: '≈ €150 / семестр (почти бесплатно)',
     photo: 'https://images.unsplash.com/photo-1595867818082-083862f3d630?auto=format&fit=crop&w=800&q=80',
     description: 'Ведущий технический университет Германии. Государственные вузы страны почти не берут плату за обучение даже с иностранных студентов.',
@@ -600,6 +619,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Engineering', share:30, top:true}, {name:'Computer Science', share:22}, {name:'Mathematics & Physics', share:16}, {name:'Data Science & AI', share:12} ] },
 
   { name: 'University of Melbourne', domain: 'unimelb.edu.au', country: 'Австралия', countryCode: 'au', state: 'Виктория', city: 'Мельбурн',
+    system: 'australia', livingCost: '≈ AUD $22,000 / год',
     minGPA: 3.5, minIELTS: 6.5, rate: 30, tuition: '≈ AUD $45,000 / год',
     photo: 'https://images.unsplash.com/photo-1514395462725-fb4566210144?auto=format&fit=crop&w=800&q=80',
     description: 'Один из ведущих университетов Южного полушария, известен гибкой Melbourne Model — модульной системой бакалавриата.',
@@ -607,6 +627,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:18, top:true}, {name:'Medicine', share:14}, {name:'Biology & Life Sciences', share:12}, {name:'Law', share:10} ] },
 
   { name: 'National University of Singapore (NUS)', domain: 'nus.edu.sg', country: 'Сингапур', countryCode: 'sg', state: null, city: 'Сингапур',
+    system: 'asia', livingCost: '≈ SGD $14,000 / год',
     minGPA: 3.7, minIELTS: 7.0, rate: 8, tuition: '≈ SGD $30,000 / год',
     photo: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80',
     description: 'Лучший университет Азии по большинству мировых рейтингов, с сильнейшими программами по бизнесу, инженерии и IT.',
@@ -614,6 +635,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:20, top:true}, {name:'Computer Science', share:18}, {name:'Engineering', share:16}, {name:'Data Science & AI', share:14} ] },
 
   { name: 'Nazarbayev University', domain: 'nu.edu.kz', country: 'Казахстан', countryCode: 'kz', state: null, city: 'Астана',
+    system: 'other', livingCost: '≈ $5,000 / год',
     minGPA: 3.3, minIELTS: 6.0, rate: 12, tuition: '≈ $14,000 / год (много грантов от государства)',
     photo: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=80',
     description: 'Ведущий исследовательский университет Центральной Азии с преподаванием на английском языке и партнёрствами с топовыми западными вузами.',
@@ -621,6 +643,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:16, top:true}, {name:'Computer Science', share:14}, {name:'Engineering', share:14}, {name:'Political Science / IR', share:12} ] },
 
   { name: 'Tsinghua University', domain: 'tsinghua.edu.cn', country: 'Китай', countryCode: 'cn', state: null, city: 'Пекин',
+    system: 'asia', livingCost: '≈ ¥40,000 / год',
     minGPA: 3.8, minIELTS: 6.5, rate: 2, tuition: '≈ ¥30,000 / год (для иностранцев)',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Main_building_of_Tsinghua_University_(20190709103617).jpg?width=800',
     description: 'Один из самых престижных технических университетов мира, часто называют "китайским MIT". Лидер по числу патентов и инженерных исследований в Азии.',
@@ -628,6 +651,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Engineering', share:26, top:true}, {name:'Computer Science', share:24}, {name:'Data Science & AI', share:16}, {name:'Business & Economics', share:12} ] },
 
   { name: 'Peking University', domain: 'pku.edu.cn', country: 'Китай', countryCode: 'cn', state: null, city: 'Пекин',
+    system: 'asia', livingCost: '≈ ¥40,000 / год',
     minGPA: 3.8, minIELTS: 6.5, rate: 3, tuition: '≈ ¥33,000 / год (для иностранцев)',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Red_building_of_Peking_University.JPG?width=800',
     description: 'Старейший и один из самых престижных университетов Китая, известен сильными гуманитарными и естественнонаучными школами.',
@@ -635,6 +659,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:20, top:true}, {name:'Political Science / IR', share:16}, {name:'Computer Science', share:14}, {name:'Biology & Life Sciences', share:12} ] },
 
   { name: 'University of Tokyo', domain: 'u-tokyo.ac.jp', country: 'Япония', countryCode: 'jp', state: null, city: 'Токио',
+    system: 'asia', livingCost: '≈ ¥1,200,000 / год',
     minGPA: 3.7, minIELTS: 6.5, rate: 24, tuition: '≈ ¥535,800 / год',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Yasuda_Auditorium,_Tokyo_University_-_Nov_2005.JPG?width=800',
     description: 'Самый престижный университет Японии, лидер страны по числу нобелевских лауреатов и научных публикаций.',
@@ -642,6 +667,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Engineering', share:22, top:true}, {name:'Mathematics & Physics', share:18}, {name:'Medicine', share:14}, {name:'Computer Science', share:12} ] },
 
   { name: 'Kyoto University', domain: 'kyoto-u.ac.jp', country: 'Япония', countryCode: 'jp', state: null, city: 'Киото',
+    system: 'asia', livingCost: '≈ ¥1,000,000 / год',
     minGPA: 3.6, minIELTS: 6.5, rate: 25, tuition: '≈ ¥535,800 / год',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Kyoto_University_Clock_Tower.jpg?width=800',
     description: 'Второй по престижности университет Японии, известен свободой в организации учебного процесса и сильной исследовательской культурой.',
@@ -649,6 +675,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Mathematics & Physics', share:20, top:true}, {name:'Biology & Life Sciences', share:16}, {name:'Engineering', share:14}, {name:'Medicine', share:12} ] },
 
   { name: 'Seoul National University', domain: 'snu.ac.kr', country: 'Южная Корея', countryCode: 'kr', state: null, city: 'Сеул',
+    system: 'asia', livingCost: '≈ ₩10,000,000 / год',
     minGPA: 3.7, minIELTS: 6.5, rate: 15, tuition: '≈ ₩4,000,000 / семестр',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Seoul_National_University_Main_Gate_at_Night.jpg?width=800',
     description: 'Самый престижный университет Южной Кореи, лидер практически во всех академических рейтингах страны.',
@@ -656,6 +683,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Engineering', share:22, top:true}, {name:'Business & Economics', share:18}, {name:'Computer Science', share:14}, {name:'Medicine', share:12} ] },
 
   { name: 'KAIST', domain: 'kaist.ac.kr', country: 'Южная Корея', countryCode: 'kr', state: null, city: 'Тэджон',
+    system: 'asia', livingCost: '≈ ₩7,000,000 / год',
     minGPA: 3.8, minIELTS: 6.5, rate: 12, tuition: '≈ $3,000 / год (большинство студентов на стипендиях)',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/KAIST_campus_at_night.jpg?width=800',
     description: 'Ведущий технический университет Кореи, полностью сфокусирован на инженерии, IT и естественных науках.',
@@ -663,6 +691,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Computer Science', share:28, top:true}, {name:'Engineering', share:26}, {name:'Data Science & AI', share:16}, {name:'Mathematics & Physics', share:10} ] },
 
   { name: 'Nanyang Technological University (NTU)', domain: 'ntu.edu.sg', country: 'Сингапур', countryCode: 'sg', state: null, city: 'Сингапур',
+    system: 'asia', livingCost: '≈ SGD $14,000 / год',
     minGPA: 3.7, minIELTS: 7.0, rate: 9, tuition: '≈ SGD $30,000 / год',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/School_of_Art,_Design_and_Media,_Nanyang_Technological_University,_Singapore_-_20151028.jpg?width=800',
     description: 'Один из самых быстрорастущих технических университетов мира, соперничает с NUS за звание лучшего вуза Сингапура.',
@@ -670,6 +699,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Engineering', share:24, top:true}, {name:'Computer Science', share:20}, {name:'Business & Economics', share:14}, {name:'Data Science & AI', share:12} ] },
 
   { name: 'University of Hong Kong (HKU)', domain: 'hku.hk', country: 'Гонконг', countryCode: 'hk', state: null, city: 'Гонконг',
+    system: 'asia', livingCost: '≈ HKD $90,000 / год',
     minGPA: 3.7, minIELTS: 7.0, rate: 10, tuition: '≈ HKD $215,000 / год',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Main_Building_of_the_University_of_Hong_Kong_and_clock_tower.JPG?width=800',
     description: 'Старейший и один из самых престижных университетов Гонконга, известен сильной юридической и медицинской школами.',
@@ -677,6 +707,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:22, top:true}, {name:'Law', share:16}, {name:'Medicine', share:14}, {name:'Computer Science', share:12} ] },
 
   { name: 'Hong Kong University of Science and Technology (HKUST)', domain: 'ust.hk', country: 'Гонконг', countryCode: 'hk', state: null, city: 'Гонконг',
+    system: 'asia', livingCost: '≈ HKD $90,000 / год',
     minGPA: 3.7, minIELTS: 7.0, rate: 11, tuition: '≈ HKD $170,000 / год',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/HKUST_campus_view_looking_from_above.jpg?width=800',
     description: 'Молодой, но крайне быстро выросший в престиже технический университет, специализируется на инженерии и бизнесе.',
@@ -684,6 +715,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Engineering', share:24, top:true}, {name:'Business & Economics', share:20}, {name:'Computer Science', share:18}, {name:'Data Science & AI', share:12} ] },
 
   { name: 'Indian Institute of Technology Bombay (IIT Bombay)', domain: 'iitb.ac.in', country: 'Индия', countryCode: 'in', state: 'Махараштра', city: 'Мумбаи',
+    system: 'asia', livingCost: '≈ $3,000 / год',
     minGPA: 3.6, minIELTS: 6.5, rate: 1, tuition: '≈ ₹200,000 / год',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Main_building_in_IIT_Bombay.jpg?width=800',
     description: 'Один из самых престижных технических университетов Индии, попасть можно только через крайне сложный экзамен JEE Advanced.',
@@ -691,6 +723,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Engineering', share:30, top:true}, {name:'Computer Science', share:26}, {name:'Data Science & AI', share:14}, {name:'Mathematics & Physics', share:10} ] },
 
   { name: 'Indian Institute of Technology Delhi (IIT Delhi)', domain: 'iitd.ac.in', country: 'Индия', countryCode: 'in', state: 'Дели', city: 'Нью-Дели',
+    system: 'asia', livingCost: '≈ $3,000 / год',
     minGPA: 3.6, minIELTS: 6.5, rate: 1, tuition: '≈ ₹200,000 / год',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/IIT_Delhi_Main_building.jpg?width=800',
     description: 'Один из ведущих технических университетов Индии, входит в число самых селективных вузов мира по проценту поступления.',
@@ -698,6 +731,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Engineering', share:28, top:true}, {name:'Computer Science', share:26}, {name:'Data Science & AI', share:16}, {name:'Mathematics & Physics', share:10} ] },
 
   { name: 'Sciences Po', domain: 'sciencespo.fr', country: 'Франция', countryCode: 'fr', state: null, city: 'Париж',
+    system: 'europe', livingCost: '≈ €12,000 / год',
     minGPA: 3.5, minIELTS: 7.0, rate: 17, tuition: '≈ €14,000 / год (зависит от дохода семьи)',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Sciences_Po_Paris,_28_rue_des_Saints-P%C3%A8res,_Paris_7e_3.jpg?width=800',
     description: 'Ведущая французская школа социальных и политических наук, кузница дипломатов, политиков и журналистов.',
@@ -705,6 +739,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Political Science / IR', share:32, top:true}, {name:'Law', share:16}, {name:'Business & Economics', share:14}, {name:'Design & Architecture', share:8} ] },
 
   { name: 'Sorbonne University', domain: 'sorbonne-universite.fr', country: 'Франция', countryCode: 'fr', state: null, city: 'Париж',
+    system: 'europe', livingCost: '≈ €12,000 / год',
     minGPA: 3.4, minIELTS: 6.5, rate: 40, tuition: '≈ €3,770 / год (гос. тариф)',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Sorbonne_university_main_building_entrance.jpg?width=800',
     description: 'Один из старейших университетов мира, наследник средневекового парижского университета, силён в гуманитарных и естественных науках.',
@@ -712,13 +747,15 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Biology & Life Sciences', share:18, top:true}, {name:'Mathematics & Physics', share:16}, {name:'Political Science / IR', share:12}, {name:'Medicine', share:10} ] },
 
   { name: 'Bocconi University', domain: 'unibocconi.it', country: 'Италия', countryCode: 'it', state: null, city: 'Милан',
+    system: 'europe', livingCost: '≈ €11,000 / год',
     minGPA: 3.6, minIELTS: 7.0, rate: 18, tuition: '≈ €14,000 / год (зависит от дохода семьи)',
-    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Bocconi-entrance-vel.jpg?width=800',
+    photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Universit%C3%A0_degli_studi_Luigi_Bocconi_-_Milano.jpg?width=800',
     description: 'Ведущая бизнес-школа Италии и одна из сильнейших в Европе, известна тесными связями с международным финансовым сектором.',
     facts: ['Считается итальянским эквивалентом London Business School.', 'Стоимость обучения гибко зависит от финансового положения семьи.', 'Сильные карьерные связи с инвестбанками Лондона и Милана.'],
     majors: [ {name:'Business & Economics', share:34, top:true}, {name:'Data Science & AI', share:14}, {name:'Political Science / IR', share:12}, {name:'Law', share:8} ] },
 
   { name: 'Politecnico di Milano', domain: 'polimi.it', country: 'Италия', countryCode: 'it', state: null, city: 'Милан',
+    system: 'europe', livingCost: '≈ €11,000 / год',
     minGPA: 3.4, minIELTS: 6.0, rate: 35, tuition: '≈ €3,900 / год (зависит от дохода семьи)',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Politecnico_di_Milano.jpg?width=800',
     description: 'Ведущий технический университет Италии, особенно силён в архитектуре, дизайне и инженерии.',
@@ -726,6 +763,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Engineering', share:26, top:true}, {name:'Design & Architecture', share:22}, {name:'Computer Science', share:14}, {name:'Mathematics & Physics', share:10} ] },
 
   { name: 'Delft University of Technology (TU Delft)', domain: 'tudelft.nl', country: 'Нидерланды', countryCode: 'nl', state: null, city: 'Делфт',
+    system: 'europe', livingCost: '≈ €11,000 / год',
     minGPA: 3.5, minIELTS: 6.5, rate: 35, tuition: '≈ €18,000 / год (для не-ЕС)',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Aerial_view_of_TU_Delft_campus.jpg?width=800',
     description: 'Крупнейший и самый престижный технический университет Нидерландов, известен сильной программой по инженерии и архитектуре.',
@@ -733,6 +771,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Engineering', share:30, top:true}, {name:'Computer Science', share:18}, {name:'Design & Architecture', share:16}, {name:'Mathematics & Physics', share:10} ] },
 
   { name: 'University of Amsterdam', domain: 'uva.nl', country: 'Нидерланды', countryCode: 'nl', state: null, city: 'Амстердам',
+    system: 'europe', livingCost: '≈ €14,000 / год',
     minGPA: 3.4, minIELTS: 6.5, rate: 40, tuition: '≈ €15,000 / год (для не-ЕС)',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/University_of_Amsterdam_235_2094.jpg?width=800',
     description: 'Один из крупнейших исследовательских университетов Европы, силён в социальных науках, экономике и медиа.',
@@ -740,6 +779,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:20, top:true}, {name:'Political Science / IR', share:16}, {name:'Psychology', share:14}, {name:'Data Science & AI', share:10} ] },
 
   { name: 'KTH Royal Institute of Technology', domain: 'kth.se', country: 'Швеция', countryCode: 'se', state: null, city: 'Стокгольм',
+    system: 'europe', livingCost: '≈ SEK 120,000 / год',
     minGPA: 3.5, minIELTS: 6.5, rate: 20, tuition: '≈ SEK 180,000 / год (для не-ЕС)',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Royal_institute_of_technology_Sweden_20050616.jpg?width=800',
     description: 'Крупнейший технический университет Швеции, известен сильными программами в IT, инженерии и устойчивом развитии.',
@@ -747,6 +787,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Engineering', share:26, top:true}, {name:'Computer Science', share:22}, {name:'Data Science & AI', share:14}, {name:'Mathematics & Physics', share:10} ] },
 
   { name: 'Lund University', domain: 'lu.se', country: 'Швеция', countryCode: 'se', state: null, city: 'Лунд',
+    system: 'europe', livingCost: '≈ SEK 95,000 / год',
     minGPA: 3.4, minIELTS: 6.5, rate: 25, tuition: '≈ SEK 150,000 / год (для не-ЕС)',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Lund_University_main_building.jpg?width=800',
     description: 'Один из старейших и самых престижных университетов Скандинавии, силён в широком спектре дисциплин от права до инженерии.',
@@ -754,6 +795,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:16, top:true}, {name:'Engineering', share:16}, {name:'Law', share:12}, {name:'Political Science / IR', share:10} ] },
 
   { name: 'University of Copenhagen', domain: 'ku.dk', country: 'Дания', countryCode: 'dk', state: null, city: 'Копенгаген',
+    system: 'europe', livingCost: '≈ DKK 100,000 / год',
     minGPA: 3.4, minIELTS: 6.5, rate: 30, tuition: '≈ DKK 200,000 / год (для не-ЕС)',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/University_Main_Building.jpg?width=800',
     description: 'Крупнейший университет Дании, силён в медицине, естественных науках и социальных исследованиях.',
@@ -761,6 +803,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Medicine', share:18, top:true}, {name:'Biology & Life Sciences', share:16}, {name:'Political Science / IR', share:12}, {name:'Law', share:10} ] },
 
   { name: 'Trinity College Dublin', domain: 'tcd.ie', country: 'Ирландия', countryCode: 'ie', state: null, city: 'Дублин',
+    system: 'europe', livingCost: '≈ €14,000 / год',
     minGPA: 3.5, minIELTS: 6.5, rate: 28, tuition: '≈ €25,000 / год',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Trinity_College_Dublin_Campanile.jpg?width=800',
     description: 'Старейший университет Ирландии, известен своей исторической библиотекой и сильной гуманитарной школой.',
@@ -768,6 +811,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:16, top:true}, {name:'Computer Science', share:14}, {name:'Law', share:12}, {name:'Medicine', share:10} ] },
 
   { name: 'University College Dublin (UCD)', domain: 'ucd.ie', country: 'Ирландия', countryCode: 'ie', state: null, city: 'Дублин',
+    system: 'europe', livingCost: '≈ €14,000 / год',
     minGPA: 3.4, minIELTS: 6.5, rate: 32, tuition: '≈ €24,000 / год',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/University_College_Dublin_Campus_Photo1.jpg?width=800',
     description: 'Крупнейший университет Ирландии, известен сильной бизнес-школой и тесными связями с технологическими компаниями Дублина.',
@@ -775,6 +819,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:18, top:true}, {name:'Computer Science', share:16}, {name:'Engineering', share:12}, {name:'Law', share:10} ] },
 
   { name: 'University of Edinburgh', domain: 'ed.ac.uk', country: 'Великобритания', countryCode: 'gb', state: null, city: 'Эдинбург',
+    system: 'uk', livingCost: '≈ £11,500 / год',
     minGPA: 3.6, minIELTS: 6.5, rate: 40, tuition: '≈ £26,000 / год',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Old_College_of_Edinburgh_University.JPG?width=800',
     description: 'Один из старейших и самых престижных университетов Шотландии, силён в медицине, науках о данных и гуманитарных дисциплинах.',
@@ -782,6 +827,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Medicine', share:16, top:true}, {name:'Data Science & AI', share:14}, {name:'Business & Economics', share:12}, {name:'Psychology', share:10} ] },
 
   { name: "King's College London", domain: 'kcl.ac.uk', country: 'Великобритания', countryCode: 'gb', state: null, city: 'Лондон',
+    system: 'uk', livingCost: '≈ £16,000 / год (самый дорогой город Великобритании)',
     minGPA: 3.5, minIELTS: 7.0, rate: 13, tuition: '≈ £28,000 / год',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Kingsbuilding.jpg?width=800',
     description: 'Один из основателей Лондонского университета, известен сильной медицинской и юридической школами в самом центре Лондона.',
@@ -789,6 +835,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Medicine', share:18, top:true}, {name:'Law', share:14}, {name:'Political Science / IR', share:12}, {name:'Business & Economics', share:10} ] },
 
   { name: 'University of Manchester', domain: 'manchester.ac.uk', country: 'Великобритания', countryCode: 'gb', state: null, city: 'Манчестер',
+    system: 'uk', livingCost: '≈ £10,500 / год',
     minGPA: 3.4, minIELTS: 6.5, rate: 56, tuition: '≈ £26,000 / год',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/University_of_Manchester.jpg?width=800',
     description: 'Один из крупнейших исследовательских университетов Великобритании, известен сильной инженерной и научной школой.',
@@ -796,6 +843,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Engineering', share:18, top:true}, {name:'Business & Economics', share:16}, {name:'Computer Science', share:12}, {name:'Biology & Life Sciences', share:10} ] },
 
   { name: 'University of Cape Town', domain: 'uct.ac.za', country: 'ЮАР', countryCode: 'za', state: null, city: 'Кейптаун',
+    system: 'other', livingCost: '≈ $6,000 / год',
     minGPA: 3.2, minIELTS: 6.5, rate: 20, tuition: '≈ $8,000 / год (для иностранцев)',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Jameson_Hall_-_University_of_Cape_Town.jpg?width=800',
     description: 'Самый престижный университет Африки, лидер континента по большинству мировых рейтингов.',
@@ -803,6 +851,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:16, top:true}, {name:'Medicine', share:14}, {name:'Law', share:12}, {name:'Engineering', share:10} ] },
 
   { name: 'University of São Paulo (USP)', domain: 'usp.br', country: 'Бразилия', countryCode: 'br', state: 'Сан-Паулу', city: 'Сан-Паулу',
+    system: 'other', livingCost: '≈ $5,000 / год',
     minGPA: 3.3, minIELTS: 6.0, rate: 10, tuition: 'Бесплатно для местных студентов, спецпрограммы для иностранцев',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Cidade_universit%C3%A1ria_da_Universidade_de_S%C3%A3o_Paulo_(USP).jpg?width=800',
     description: 'Крупнейший и самый престижный университет Латинской Америки, силён практически во всех областях науки.',
@@ -810,6 +859,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Engineering', share:18, top:true}, {name:'Medicine', share:16}, {name:'Law', share:12}, {name:'Business & Economics', share:10} ] },
 
   { name: 'Tecnológico de Monterrey', domain: 'tec.mx', country: 'Мексика', countryCode: 'mx', state: 'Нуэво-Леон', city: 'Монтеррей',
+    system: 'other', livingCost: '≈ $6,500 / год',
     minGPA: 3.4, minIELTS: 6.5, rate: 65, tuition: '≈ $9,000 / год',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Tecnol%C3%B3gico_de_Monterrey,_Campus_Monterrey_-_panoramio.jpg?width=800',
     description: 'Ведущий частный технический университет Латинской Америки, известен тесными связями с международным бизнесом.',
@@ -817,6 +867,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:20, top:true}, {name:'Engineering', share:18}, {name:'Computer Science', share:14}, {name:'Design & Architecture', share:10} ] },
 
   { name: 'American University of Beirut (AUB)', domain: 'aub.edu.lb', country: 'Ливан', countryCode: 'lb', state: null, city: 'Бейрут',
+    system: 'other', livingCost: '≈ $8,000 / год',
     minGPA: 3.3, minIELTS: 6.5, rate: 40, tuition: '≈ $20,000 / год',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/American_University_of_Beirut_(AUB).jpg?width=800',
     description: 'Старейший американский по модели университет на Ближнем Востоке, известен сильной медицинской школой.',
@@ -824,6 +875,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Medicine', share:18, top:true}, {name:'Business & Economics', share:16}, {name:'Engineering', share:12}, {name:'Political Science / IR', share:10} ] },
 
   { name: 'KAUST (King Abdullah University of Science and Technology)', domain: 'kaust.edu.sa', country: 'Саудовская Аравия', countryCode: 'sa', state: null, city: 'Тувал',
+    system: 'other', livingCost: 'Проживание на кампусе включено в стипендию',
     minGPA: 3.6, minIELTS: 6.5, rate: 3, tuition: 'Полностью покрывается стипендией для всех студентов',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/KAUST01.JPG?width=800',
     description: 'Исследовательский университет для магистратуры и PhD, полностью финансируемый государством — обучение бесплатно для всех принятых студентов.',
@@ -831,6 +883,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Engineering', share:28, top:true}, {name:'Data Science & AI', share:22}, {name:'Biology & Life Sciences', share:16}, {name:'Mathematics & Physics', share:12} ] },
 
   { name: 'University of Vienna', domain: 'univie.ac.at', country: 'Австрия', countryCode: 'at', state: null, city: 'Вена',
+    system: 'europe', livingCost: '≈ €10,000 / год',
     minGPA: 3.2, minIELTS: 6.5, rate: 70, tuition: '≈ €1,500 / год (для не-ЕС)',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Universit%C3%A4t_Wien_Front.JPG?width=800',
     description: 'Старейший университет немецкоязычного мира, известен сильной гуманитарной и естественнонаучной традицией.',
@@ -838,6 +891,7 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Psychology', share:14, top:true}, {name:'Biology & Life Sciences', share:12}, {name:'Political Science / IR', share:12}, {name:'Law', share:10} ] },
 
   { name: 'HSE University (Высшая школа экономики)', domain: 'hse.ru', country: 'Россия', countryCode: 'ru', state: null, city: 'Москва',
+    system: 'other', livingCost: '≈ ₽350,000 / год',
     minGPA: 3.6, minIELTS: 6.5, rate: 20, tuition: '≈ ₽500,000 / год',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Moscow_Durasov_Palace_asv2018-08.jpg?width=800',
     description: 'Один из самых современных и быстрорастущих университетов России, известен сильной экономической и IT-школой.',
@@ -845,12 +899,23 @@ const RAW_UNIVERSITIES = [
     majors: [ {name:'Business & Economics', share:24, top:true}, {name:'Computer Science', share:20}, {name:'Data Science & AI', share:16}, {name:'Political Science / IR', share:10} ] },
 
   { name: 'Lomonosov Moscow State University (МГУ)', domain: 'msu.ru', country: 'Россия', countryCode: 'ru', state: null, city: 'Москва',
+    system: 'other', livingCost: '≈ ₽350,000 / год',
     minGPA: 3.7, minIELTS: 6.5, rate: 15, tuition: '≈ ₽450,000 / год',
     photo: 'https://commons.wikimedia.org/wiki/Special:FilePath/Main_Building_of_Moscow_State_University.jpg?width=800',
     description: 'Старейший и самый престижный университет России, лидер практически во всех академических рейтингах страны.',
     facts: ['Основан в 1755 году.', 'Главное здание МГУ — одна из знаменитых "сталинских высоток" Москвы.', 'Сильнейшая фундаментальная научная школа в физике и математике.'],
     majors: [ {name:'Mathematics & Physics', share:20, top:true}, {name:'Biology & Life Sciences', share:14}, {name:'Law', share:12}, {name:'Political Science / IR', share:10} ] }
 ];
+
+const DOC_SYSTEMS = {
+  us: ["Common App / Coalition App анкета", "School transcript (табель успеваемости) с переводом", "Результаты SAT/ACT (многие вузы test-optional — уточни на сайте)", "2 рекомендательных письма от учителей", "Personal essay (Common App essay, ~650 слов)", "IELTS/TOEFL для не-носителей языка", "Финансовая справка для визы F-1"],
+  uk: ["Анкета UCAS + Personal Statement", "School transcript / предсказанные оценки (predicted grades)", "Референс от учителя/школы через UCAS", "IELTS/TOEFL сертификат", "Копия загранпаспорта", "Подтверждение финансирования для Student visa"],
+  canada: ["Заявка через портал университета", "School transcript с переводом", "Мотивационное письмо / эссе", "1-2 рекомендательных письма", "IELTS/TOEFL сертификат", "Подтверждение финансирования для Study Permit"],
+  europe: ["Заявка через национальный портал приёма (uni-assist, Studielink и т.п.)", "Аттестат/диплом с апостилем и переводом", "Мотивационное письмо", "IELTS/TOEFL сертификат (или язык страны обучения)", "Копия загранпаспорта", "Подтверждение финансирования (напр. блокированный счёт)"],
+  australia: ["Заявка через портал университета", "School transcript с переводом", "IELTS/TOEFL сертификат", "Мотивационное письмо (для части программ)", "Подтверждение финансирования для визы subclass 500"],
+  asia: ["Заявка через портал университета", "School transcript с переводом и апостилем", "IELTS/TOEFL сертификат", "Мотивационное письмо", "1-2 рекомендательных письма", "Копия загранпаспорта"],
+  other: ["Заявка через портал университета", "Аттестат/диплом с переводом", "Мотивационное письмо", "IELTS/TOEFL сертификат (если программа на английском)", "Копия загранпаспорта"]
+};
 
 function autoEnrichUniversityData(uni, tier) {
   const flag = `https://flagcdn.com/w40/${uni.countryCode}.png`;
@@ -876,7 +941,9 @@ function autoEnrichUniversityData(uni, tier) {
     description: uni.description || '',
     facts: uni.facts || [],
     majors: uni.majors || [],
-    photo: uni.photo || null
+    photo: uni.photo || null,
+    livingCost: uni.livingCost || null,
+    documents: DOC_SYSTEMS[uni.system] || DOC_SYSTEMS.other
   };
 }
 
@@ -1144,6 +1211,7 @@ function openUniModal(uniName) {
   if (statsBox) {
     const chips = [
       uni.tuition ? { icon: 'wallet', label: t('chip_tuition'), value: uni.tuition } : null,
+      uni.livingCost ? { icon: 'home', label: 'Проживание', value: uni.livingCost } : null,
       uni.minGPA !== null ? { icon: 'bar-chart-2', label: t('chip_gpa'), value: uni.minGPA } : null,
       uni.minIELTS !== null ? { icon: 'languages', label: t('chip_ielts'), value: uni.minIELTS } : null,
       uni.rate !== null ? { icon: 'percent', label: t('chip_rate'), value: `${uni.rate}%` } : null
@@ -1173,6 +1241,16 @@ function openUniModal(uniName) {
     `).join('');
   } else {
     factsList.innerHTML = `<li class="text-xs text-slate-400 italic">Интересные факты по этому вузу пока не добавлены.</li>`;
+  }
+
+  const docsBox = document.getElementById('modalUniDocuments');
+  if (docsBox) {
+    docsBox.innerHTML = uni.documents.map(doc => `
+      <li class="flex items-start gap-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
+        <i data-lucide="file-text" class="w-4 h-4 text-indigo-500 shrink-0 mt-0.5"></i>
+        <span>${doc}</span>
+      </li>
+    `).join('') + `<p class="text-[10px] text-slate-400 pt-1 col-span-full">Список стандартный для системы образования этой страны — точный набор документов и дедлайны всегда уточняй в приёмной комиссии вуза.</p>`;
   }
 
   const majorsBox = document.getElementById('modalUniMajors');
