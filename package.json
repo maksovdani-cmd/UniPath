@@ -1,0 +1,9 @@
+{
+  "name": "unipath-ai",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "web-push": "^3.6.7",
+    "@netlify/blobs": "^8.1.0"
+  }
+}
