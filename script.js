@@ -92,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   lucide.createIcons();
   populateMajorSelect();
   initUniversityFilters();
+  registerLeoServiceWorker(); // регистрируем сразу, чтобы сайт можно было "установить" как приложение
 
   const savedUser = localStorage.getItem('unipath_user');
   if (savedUser) {
@@ -1441,14 +1442,53 @@ async function sendUserMessage(text) {
 const LEO_MISSIONS = [
   "Найди 2 extracurricular activities, которые соответствуют твоей специальности.",
   "Напиши первые 100 слов своего Personal Statement.",
-  "Добавь 3 university в свой shortlist.",
+  "Изучи 3 университета в разделе Universities & Chances Match и выпиши, чем они отличаются.",
   "Выучи 15 новых слов для IELTS/SAT."
 ];
+
+// Подсказки/примеры к каждой миссии — 5 вариантов на каждую, меняются по своему циклу (не совпадает с циклом самих миссий),
+// поэтому даже когда миссия повторяется через 4 дня, подсказка к ней уже другая.
+const LEO_GUIDES = [
+  [ // Миссия 0: extracurricular activities
+    { instruction: "Подумай про кружки, волонтёрство или соревнования вне школы, связанные с твоей специальностью.", example: "Например, для будущего инженера — участие в кружке робототехники или хакатоне." },
+    { instruction: "Вспомни, помогал(а) ли ты кому-то или участвовал(а) в проекте на общественных началах.", example: "Например, для медицины — волонтёрство в больнице или помощь пожилым людям в районе." },
+    { instruction: "Подумай про онлайн-курсы, стажировки или самостоятельные проекты вне школьной программы.", example: "Например, для программиста — свой pet-проект на GitHub или онлайн-курс на Coursera." },
+    { instruction: "Вспомни про дебаты, модели ООН, школьные советы или лидерские роли.", example: "Например, для будущего политолога — участие в Model UN или школьном самоуправлении." },
+    { instruction: "Подумай про творческие активности — выставки, конкурсы, публикации.", example: "Например, для дизайнера — личная выставка работ или участие в конкурсе плакатов." }
+  ],
+  [ // Миссия 1: Personal Statement 100 слов
+    { instruction: "Начни с конкретного момента или истории из жизни, которая привела тебя к выбору специальности.", example: "Например: «Когда мне было 12 лет, я разобрал старый радиоприёмник, чтобы понять, как он работает...»" },
+    { instruction: "Начни с вопроса, который ты сам(а) себе задавал(а) и который стал толчком к выбору пути.", example: "Например: «Почему одни страны богатеют, а другие нет? Этот вопрос не давал мне покоя с 9 класса...»" },
+    { instruction: "Опиши момент, когда ты осознал(а), что хочешь заниматься этим профессионально.", example: "Например: «Когда я впервые увидел(а) результат своей программы вживую, я понял(а), что хочу заниматься этим всю жизнь...»" },
+    { instruction: "Начни с факта или статистики, которая тебя зацепила и связана с твоей специальностью.", example: "Например: «Каждый год более миллиона людей умирают от болезней, которые можно предотвратить...»" },
+    { instruction: "Опиши конкретную проблему, которую тебе хочется решить в будущем, и почему именно она важна.", example: "Например: «В моём городе нет доступа к чистой питьевой воде — эта проблема и привела меня к инженерии...»" }
+  ],
+  [ // Миссия 2: изучить 3 университета
+    { instruction: "Сравни университеты по стоимости обучения и наличию финансовой помощи.", example: "Например: «Harvard дороже, но там есть Need-Blind Aid, а у Caltech стоимость ниже, но меньше грантов»." },
+    { instruction: "Сравни университеты по проценту поступления (% Шанс) с учётом твоих баллов.", example: "Например: «У меня выше шанс в Toronto, чем в MIT, из-за разницы в требованиях по GPA»." },
+    { instruction: "Сравни, насколько твоя специальность популярна и хорошо представлена в каждом из университетов.", example: "Например: «В NUS моя специальность — топ направление (24%), а в LSE её почти нет»." },
+    { instruction: "Сравни расположение и город — климат, стоимость жизни, удалённость от дома.", example: "Например: «Мельбурн дороже для жизни, чем Астана, но зато англоязычная среда»." },
+    { instruction: "Сравни интересные факты о каждом вузе — историю, известных выпускников, особенности кампуса.", example: "Например: «В Yale учился один президент США, а в ETH Zurich — сразу несколько нобелевских лауреатов»." }
+  ],
+  [ // Миссия 3: 15 слов IELTS/SAT
+    { instruction: "Выучи академическую лексику для эссе — слова для аргументации и связок.", example: "Например: nevertheless, furthermore, consequently, arguably, whereas." },
+    { instruction: "Выучи фразовые глаголы, которые часто встречаются в IELTS Listening/Reading.", example: "Например: bring about, carry out, come across, deal with, set out." },
+    { instruction: "Выучи синонимы к часто используемым простым словам — это поднимает балл за Lexical Resource.", example: "Например: important → crucial/pivotal, big → substantial, show → demonstrate." },
+    { instruction: "Выучи идиомы и устойчивые выражения для Speaking, чтобы звучать более естественно.", example: "Например: a piece of cake, hit the books, on the same page." },
+    { instruction: "Выучи слова для описания графиков и диаграмм — пригодится для IELTS Writing Task 1.", example: "Например: fluctuate, plummet, surge, plateau, gradually increase." }
+  ]
+];
+
+function getTodayLeoGuide() {
+  const [, dayOfYear] = getLeoDayKey().split('-').map(Number);
+  const missionIdx = getLeoDayIndex();
+  const guideIdx = dayOfYear % LEO_GUIDES[missionIdx].length;
+  return LEO_GUIDES[missionIdx][guideIdx];
+}
 
 const LEO_MIN_WORDS = 20;
 const LEO_HISTORY_KEY = 'unipath_penguin_history';
 const LEO_PROGRESS_KEY = 'unipath_penguin_progress';
-const LEO_NOTIFY_KEY = 'unipath_penguin_notified_day';
 
 // Ключ дня в формате "год-деньГода" — используется, чтобы миссия менялась ровно раз в 24 часа
 function getLeoDayKey() {
@@ -1536,12 +1576,28 @@ function buildLeoGreeting() {
   return greeting;
 }
 
+function toggleLeoGuide() {
+  const box = document.getElementById('leoGuideBox');
+  if (box) box.classList.toggle('hidden');
+}
+
 function openLeoModal() {
   const modal = document.getElementById('leoModal');
   if (!modal) return;
 
   document.getElementById('leoGreetingText').innerText = buildLeoGreeting();
   document.getElementById('leoMissionText').innerText = getTodayLeoMission();
+
+  const guide = getTodayLeoGuide();
+  const guideBox = document.getElementById('leoGuideBox');
+  if (guideBox) {
+    guideBox.classList.add('hidden');
+    guideBox.innerHTML = `
+      <p class="font-bold text-indigo-700 mb-1">💡 ${guide.instruction}</p>
+      <p class="text-slate-500 italic">${guide.example}</p>
+      <p class="text-[10px] text-rose-500 font-bold mt-1.5">⚠️ Лео знает этот пример — если просто перепишешь его, задание не засчитается.</p>
+    `;
+  }
 
   const answerInput = document.getElementById('leoAnswerInput');
   const submitBtn = document.getElementById('leoSubmitBtn');
@@ -1613,7 +1669,8 @@ async function submitLeoMission() {
       body: JSON.stringify({
         answer,
         mission: getTodayLeoMission(),
-        history: getLeoHistory().map(h => h.text)
+        history: getLeoHistory().map(h => h.text),
+        hintExample: getTodayLeoGuide().example
       })
     });
 
@@ -1626,6 +1683,7 @@ async function submitLeoMission() {
       feedbackBox.innerHTML = data.message || '🎉 Отлично, миссия засчитана!';
       saveLeoHistoryEntry(answer);
       markTodayLeoMissionDone();
+      notifyServerLeoMissionDone();
       answerInput.disabled = true;
       renderLeoWidget();
     } else {
@@ -1644,38 +1702,76 @@ async function submitLeoMission() {
   if (window.lucide) lucide.createIcons();
 }
 
-// ---------- Push-уведомления ----------
+// ---------- Настоящий push через Service Worker (работает даже при закрытом сайте) ----------
 
-function initLeoNotifications() {
-  if (!('Notification' in window)) return;
+const LEO_VAPID_PUBLIC_KEY = 'BF6egEQqYasT1tSrUFFsMqLz1SIbUX6QrmhcyJ2-VxM-ywkPat7cQE6Nb4YiPooxJAO_x18Zo-QSLUPabulSnkg';
+const LEO_USER_ID_KEY = 'unipath_penguin_user_id';
 
-  if (Notification.permission === 'default') {
-    Notification.requestPermission().then(() => sendLeoDailyNotification());
-    return;
+function getLeoUserId() {
+  let id = localStorage.getItem(LEO_USER_ID_KEY);
+  if (!id) {
+    id = 'u_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 10);
+    localStorage.setItem(LEO_USER_ID_KEY, id);
   }
-
-  sendLeoDailyNotification();
+  return id;
 }
 
-function sendLeoDailyNotification() {
-  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+// Base64 (URL-safe) -> Uint8Array, нужно для передачи VAPID-ключа в pushManager.subscribe
+function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const rawData = atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+  for (let i = 0; i < rawData.length; i++) outputArray[i] = rawData.charCodeAt(i);
+  return outputArray;
+}
 
-  const todayKey = getLeoDayKey();
-  if (localStorage.getItem(LEO_NOTIFY_KEY) === todayKey) return; // уже уведомляли сегодня
-  if (isTodayLeoMissionDone()) return;
+async function registerLeoServiceWorker() {
+  if (!('serviceWorker' in navigator)) return null;
+  try {
+    return await navigator.serviceWorker.register('/sw.js');
+  } catch (e) {
+    return null;
+  }
+}
+
+async function initLeoNotifications() {
+  if (!('PushManager' in window)) return;
+
+  const registration = await registerLeoServiceWorker();
+  if (!registration) return;
 
   try {
-    const notification = new Notification("Leo's Daily Mission 🐧", {
-      body: `Today's Mission => ${getTodayLeoMission()} [Start mission]`,
-      icon: '/image/leo-face.png',
-      badge: '/image/leo-face.png'
-    });
-    notification.onclick = () => {
-      window.focus();
-      openLeoModal();
-    };
-    localStorage.setItem(LEO_NOTIFY_KEY, todayKey);
+    if (Notification.permission === 'default') {
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') return;
+    }
+    if (Notification.permission !== 'granted') return;
+
+    let subscription = await registration.pushManager.getSubscription();
+    if (!subscription) {
+      subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(LEO_VAPID_PUBLIC_KEY)
+      });
+    }
+
+    // Отправляем подписку на сервер — раз в сессию достаточно, сервер сам хранит последнюю версию
+    fetch('/.netlify/functions/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: getLeoUserId(), subscription: subscription.toJSON() })
+    }).catch(() => {});
   } catch (e) {
-    // Уведомления недоступны в этом окружении (например, некоторые мобильные webview) — тихо игнорируем
+    // Push недоступен в этом окружении (например, некоторые мобильные webview) — тихо игнорируем
   }
+}
+
+// Сообщаем серверу, что миссия на сегодня сдана — чтобы напоминание не прислали зря
+function notifyServerLeoMissionDone() {
+  fetch('/.netlify/functions/mark-done', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId: getLeoUserId(), dayKey: getLeoDayKey() })
+  }).catch(() => {});
 }
