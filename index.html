@@ -148,6 +148,9 @@
             <i data-lucide="moon" class="theme-icon-moon w-4 h-4 text-slate-600"></i>
             <i data-lucide="sun" class="theme-icon-sun w-4 h-4 text-amber-400"></i>
           </button>
+          <button id="leoSettingsBtn" onclick="openLeoSettings()" aria-label="Настройки уведомлений Лео" class="flex items-center justify-center w-9 h-9 bg-white border border-slate-200 rounded-full hover:shadow-md transition shrink-0">
+            <i data-lucide="settings" class="w-4 h-4 text-slate-600"></i>
+          </button>
           <button onclick="openEditProfile()" class="flex items-center space-x-3 bg-white p-1.5 pr-4 border border-slate-200 rounded-full hover:shadow-md transition">
             <img id="headerUserAvatar" src="" class="w-8 h-8 rounded-full object-cover border border-indigo-200" alt="Avatar">
             <div class="text-left leading-tight hidden sm:block">
@@ -458,7 +461,7 @@
           <button type="button" onclick="toggleLeoGuide()" class="mt-1 inline-flex items-center gap-1.5 text-[11px] font-bold text-indigo-500 hover:text-indigo-700 transition">
             <i data-lucide="help-circle" class="w-3.5 h-3.5"></i> Как выполнить это задание?
           </button>
-          <div id="leoGuideBox" class="hidden mt-2 p-3 bg-white/70 border border-indigo-200 rounded-xl text-[11px] leading-relaxed"></div>
+          <div id="leoGuideBox" class="leo-guide-box hidden mt-2 p-3 rounded-xl text-[11px] leading-relaxed"></div>
         </div>
 
         <div>
@@ -474,6 +477,31 @@
         </button>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ==================== НАСТРОЙКИ УВЕДОМЛЕНИЙ ЛЕО ==================== -->
+  <div id="leoSettingsModal" class="fixed inset-0 z-[210] bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+    <div class="glass-card bg-white rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl p-6 space-y-5">
+      <div class="flex items-center justify-between">
+        <h3 class="text-lg font-black text-slate-900 flex items-center gap-2">
+          <i data-lucide="bell" class="w-5 h-5 text-indigo-500"></i> Напоминания Лео
+        </h3>
+        <button onclick="closeLeoSettings()" class="p-1.5 bg-slate-100 hover:bg-slate-200 rounded-full transition active:scale-95">
+          <i data-lucide="x" class="w-4 h-4 text-slate-600"></i>
+        </button>
+      </div>
+
+      <div>
+        <label for="leoPushTimeInput" class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Во сколько присылать напоминание</label>
+        <input id="leoPushTimeInput" type="time" value="20:00" class="leo-time-input w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none text-sm font-bold">
+        <p class="text-[11px] text-slate-400 mt-1.5">Если к этому времени миссия ещё не сдана — придёт push-уведомление. Время — твоё локальное, по часовому поясу устройства.</p>
+      </div>
+
+      <button onclick="saveLeoSettings()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 transition-all text-sm active:scale-95">
+        Сохранить
+      </button>
+      <p id="leoSettingsStatus" class="text-[11px] text-center font-medium text-emerald-600 hidden">Сохранено ✅</p>
     </div>
   </div>
 
