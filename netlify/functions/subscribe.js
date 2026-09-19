@@ -17,14 +17,19 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ success: false, message: 'Некорректный запрос.' }) };
   }
 
-  const { userId, subscription } = payload;
+  const { userId, subscription, notifyHourUTC } = payload;
   if (!userId || !subscription || !subscription.endpoint) {
     return { statusCode: 400, body: JSON.stringify({ success: false, message: 'Не хватает данных подписки.' }) };
   }
 
+  const record = {
+    subscription,
+    notifyHourUTC: Number.isInteger(notifyHourUTC) ? notifyHourUTC : 14 // соответствует 20:00 в Бишкеке (UTC+6), если клиент почему-то не передал час
+  };
+
   try {
     const store = getStore('leo-push-subscriptions');
-    await store.setJSON(userId, subscription);
+    await store.setJSON(userId, record);
     return { statusCode: 200, body: JSON.stringify({ success: true }) };
   } catch (err) {
     return { statusCode: 500, body: JSON.stringify({ success: false, message: 'Не удалось сохранить подписку: ' + err.message }) };
