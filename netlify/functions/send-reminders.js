@@ -46,18 +46,25 @@ exports.handler = async () => {
   const missionText = getTodayLeoMission();
 
   const { blobs } = await subsStore.list();
-  let sent = 0, skipped = 0, failed = 0;
+  const currentUTCHour = new Date().getUTCHours();
+  let sent = 0, skipped = 0, skippedHour = 0, failed = 0;
 
   for (const { key: userId } of blobs) {
     try {
+      const record = await subsStore.get(userId, { type: 'json' });
+      if (!record || !record.subscription) continue;
+
+      const notifyHourUTC = Number.isInteger(record.notifyHourUTC) ? record.notifyHourUTC : 14;
+      if (notifyHourUTC !== currentUTCHour) {
+        skippedHour++;
+        continue; // сейчас не тот час, который выбрал пользователь
+      }
+
       const completedDay = await doneStore.get(userId);
       if (completedDay === todayKey) {
         skipped++;
         continue; // уже сдал(а) сегодня — не беспокоим
       }
-
-      const subscription = await subsStore.get(userId, { type: 'json' });
-      if (!subscription) continue;
 
       const payload = JSON.stringify({
         title: "Leo's Daily Mission 🐧",
@@ -67,7 +74,7 @@ exports.handler = async () => {
         url: '/'
       });
 
-      await webpush.sendNotification(subscription, payload);
+      await webpush.sendNotification(record.subscription, payload);
       sent++;
     } catch (err) {
       failed++;
@@ -78,7 +85,7 @@ exports.handler = async () => {
     }
   }
 
-  const summary = `Отправлено: ${sent}, пропущено (уже сдали): ${skipped}, ошибок: ${failed}`;
+  const summary = `Отправлено: ${sent}, пропущено (не тот час): ${skippedHour}, пропущено (уже сдали): ${skipped}, ошибок: ${failed}`;
   console.log(summary);
   return { statusCode: 200, body: summary };
 };
