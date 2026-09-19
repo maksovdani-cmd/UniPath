@@ -43,28 +43,30 @@ function findDuplicate(answer, history) {
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const GROQ_MODEL = 'llama-3.3-70b-versatile';
 
-async function askLeoAI(answer, mission) {
-  const apiKey = process.env.AI_API_KEY;
+async function askLeoAI(answer, mission, hintExample) {
+  const apiKey = process.env.AI_API_KEY || process.env.GROQ_API_KEY;
 
   // Если ключ не настроен, не блокируем пользователя — просто пропускаем AI-проверку
   // и возвращаем базовое поздравление, чтобы функция не ломала UX.
   if (!apiKey) {
+    console.error('AI_API_KEY / GROQ_API_KEY не найден в переменных окружения Netlify.');
     return {
       success: true,
-      message: '🎉 Отлично, миссия засчитана! (AI-проверка временно недоступна, ключ не настроен)'
+      message: '🎉 Миссия засчитана! (⚠️ Внимание: AI-ключ не настроен на сервере — Лео пока не проверяет ответы по-настоящему. Добавь переменную AI_API_KEY в Site settings → Environment variables на Netlify и сделай redeploy.)'
     };
   }
 
   const systemPrompt = `Ты — Leo, дружелюбный пингвин-помощник в приложении UniPath AI для абитуриентов.
-Тебе дают формулировку ежедневной миссии и ответ студента.
+Тебе дают формулировку ежедневной миссии, пример-подсказку, которую студент мог увидеть в приложении, и ответ студента.
 Оцени, действительно ли ответ похож на честную, конкретную попытку выполнить именно эту миссию
 (не пустая отписка, не спам, не набор случайных слов, соответствует теме миссии).
+ВАЖНО: если ответ студента — это просто переписанный или слегка перефразированный пример-подсказка (совпадают конкретные детали/слова из примера, а не своя реальная ситуация), это НЕДОПУСТИМО — считай такой ответ невалидным (success=false) и вежливо объясни, что пример был просто иллюстрацией, а нужно описать свою реальную работу.
 Отвечай СТРОГО в формате JSON без каких-либо пояснений до или после, без markdown-разметки:
 {"success": true or false, "message": "короткое дружелюбное сообщение от Лео на русском языке, 1-2 предложения, с эмодзи"}
 Если success=true — искренне похвали студента и упомяни конкретную деталь из его ответа.
 Если success=false — мягко объясни, что не так, и предложи, как улучшить ответ. Никогда не будь грубым.`;
 
-  const userPrompt = `Миссия: "${mission}"\nОтвет студента: "${answer}"`;
+  const userPrompt = `Миссия: "${mission}"\nПример-подсказка, показанная студенту (её нельзя просто переписывать): "${hintExample || 'нет'}"\nОтвет студента: "${answer}"`;
 
   try {
     const response = await fetch(GROQ_API_URL, {
@@ -102,9 +104,10 @@ async function askLeoAI(answer, mission) {
   } catch (err) {
     // Если AI недоступен или вернул невалидный JSON — не блокируем пользователя,
     // засчитываем ответ по базовым проверкам (длина + дубликаты уже пройдены выше).
+    console.error('Ошибка вызова Groq API:', err.message);
     return {
       success: true,
-      message: '🎉 Отлично, миссия засчитана! Лео гордится тобой.'
+      message: '🎉 Отлично, миссия засчитана! Лео гордится тобой. (⚠️ AI-проверка дала сбой, смотри логи функции на Netlify)'
     };
   }
 }
@@ -130,6 +133,7 @@ exports.handler = async (event) => {
   const answer = (payload.answer || '').toString();
   const mission = (payload.mission || '').toString();
   const history = Array.isArray(payload.history) ? payload.history.map(String) : [];
+  const hintExample = (payload.hintExample || '').toString();
 
   if (!answer.trim() || !mission.trim()) {
     return {
@@ -162,8 +166,19 @@ exports.handler = async (event) => {
     };
   }
 
+  // 2.5) Проверка, не переписал ли студент просто пример-подсказку Лео
+  if (hintExample && similarity(answer, hintExample) >= DUPLICATE_SIMILARITY_THRESHOLD) {
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        success: false,
+        message: 'Это же пример, который я сам тебе показал! 🐧 Опиши свою реальную ситуацию, а не переписывай подсказку.'
+      })
+    };
+  }
+
   // 3) Финальная смысловая проверка через AI + сообщение от Лео
-  const aiResult = await askLeoAI(answer, mission);
+  const aiResult = await askLeoAI(answer, mission, hintExample);
 
   return {
     statusCode: 200,
