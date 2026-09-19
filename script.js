@@ -1593,9 +1593,9 @@ function openLeoModal() {
   if (guideBox) {
     guideBox.classList.add('hidden');
     guideBox.innerHTML = `
-      <p class="font-bold text-indigo-700 mb-1">💡 ${guide.instruction}</p>
-      <p class="text-slate-500 italic">${guide.example}</p>
-      <p class="text-[10px] text-rose-500 font-bold mt-1.5">⚠️ Лео знает этот пример — если просто перепишешь его, задание не засчитается.</p>
+      <p class="leo-guide-instruction mb-1">💡 ${guide.instruction}</p>
+      <p class="leo-guide-example">${guide.example}</p>
+      <p class="leo-guide-warning mt-1.5 text-[10px]">⚠️ Лео знает этот пример — если просто перепишешь его, задание не засчитается.</p>
     `;
   }
 
@@ -1702,6 +1702,49 @@ async function submitLeoMission() {
   if (window.lucide) lucide.createIcons();
 }
 
+// ---------- Настройки времени напоминаний ----------
+
+const LEO_PUSH_TIME_KEY = 'unipath_penguin_push_time';
+
+function getLeoPushTime() {
+  return localStorage.getItem(LEO_PUSH_TIME_KEY) || '20:00';
+}
+
+// Переводит выбранное локальное время (HH:MM по часовому поясу устройства) в час по UTC (0-23),
+// чтобы сервер, который ничего не знает о часовом поясе пользователя, мог сравнить его со своим текущим часом.
+function getLeoPushHourUTC() {
+  const [hh, mm] = getLeoPushTime().split(':').map(Number);
+  const now = new Date();
+  const localDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hh, mm || 0, 0);
+  return localDate.getUTCHours();
+}
+
+function openLeoSettings() {
+  const modal = document.getElementById('leoSettingsModal');
+  document.getElementById('leoPushTimeInput').value = getLeoPushTime();
+  document.getElementById('leoSettingsStatus').classList.add('hidden');
+  modal.classList.remove('hidden');
+  requestAnimationFrame(() => modal.classList.remove('opacity-0'));
+  lucide.createIcons();
+}
+
+function closeLeoSettings() {
+  const modal = document.getElementById('leoSettingsModal');
+  modal.classList.add('opacity-0');
+  setTimeout(() => modal.classList.add('hidden'), 300);
+}
+
+async function saveLeoSettings() {
+  const time = document.getElementById('leoPushTimeInput').value || '20:00';
+  localStorage.setItem(LEO_PUSH_TIME_KEY, time);
+
+  await syncLeoPushSubscription();
+
+  const status = document.getElementById('leoSettingsStatus');
+  status.classList.remove('hidden');
+  setTimeout(() => closeLeoSettings(), 900);
+}
+
 // ---------- Настоящий push через Service Worker (работает даже при закрытом сайте) ----------
 
 const LEO_VAPID_PUBLIC_KEY = 'BF6egEQqYasT1tSrUFFsMqLz1SIbUX6QrmhcyJ2-VxM-ywkPat7cQE6Nb4YiPooxJAO_x18Zo-QSLUPabulSnkg';
@@ -1735,6 +1778,49 @@ async function registerLeoServiceWorker() {
   }
 }
 
+async function sendLeoSubscriptionToServer(subscription) {
+  try {
+    await fetch('/.netlify/functions/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId: getLeoUserId(),
+        subscription: subscription.toJSON(),
+        notifyHourUTC: getLeoPushHourUTC()
+      })
+    });
+  } catch (e) {
+    // молча игнорируем — попробуем в следующий раз
+  }
+}
+
+// Вызывается при сохранении настроек времени — если подписка уже есть, просто пере-отправляем
+// её на сервер с новым notifyHourUTC. Если подписки ещё нет (не давали разрешение) — запускаем весь флоу заново.
+async function syncLeoPushSubscription() {
+  if (!('PushManager' in window) || !('serviceWorker' in navigator)) return;
+  try {
+    const registration = await navigator.serviceWorker.getRegistration('/sw.js') || await registerLeoServiceWorker();
+    if (!registration) return;
+
+    if (Notification.permission !== 'granted') {
+      // Разрешения ещё нет — запросим и подпишемся с уже выбранным временем
+      await initLeoNotifications();
+      return;
+    }
+
+    let subscription = await registration.pushManager.getSubscription();
+    if (!subscription) {
+      subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(LEO_VAPID_PUBLIC_KEY)
+      });
+    }
+    await sendLeoSubscriptionToServer(subscription);
+  } catch (e) {
+    // тихо игнорируем
+  }
+}
+
 async function initLeoNotifications() {
   if (!('PushManager' in window)) return;
 
@@ -1756,12 +1842,7 @@ async function initLeoNotifications() {
       });
     }
 
-    // Отправляем подписку на сервер — раз в сессию достаточно, сервер сам хранит последнюю версию
-    fetch('/.netlify/functions/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: getLeoUserId(), subscription: subscription.toJSON() })
-    }).catch(() => {});
+    await sendLeoSubscriptionToServer(subscription);
   } catch (e) {
     // Push недоступен в этом окружении (например, некоторые мобильные webview) — тихо игнорируем
   }
