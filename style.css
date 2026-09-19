@@ -185,3 +185,44 @@ body, .bg-white, .bg-slate-50, .bg-slate-100,
   border: 1px solid rgba(244, 63, 94, 0.25);
 }
 .dark-theme #leoFeedbackBox.leo-error { color: #fb7185; }
+
+/* ==================== ПОДСКАЗКА "КАК ВЫПОЛНИТЬ" — свои стили текста, не зависят от общих dark-theme переопределений ==================== */
+.leo-guide-box {
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+}
+.leo-guide-box .leo-guide-title { color: #3730a3; font-weight: 700; }
+.leo-guide-box .leo-guide-example { color: #52525b; font-style: italic; }
+.leo-guide-box .leo-guide-warning { color: #be123c; font-weight: 700; }
+
+.dark-theme .leo-guide-box {
+  background: rgba(99, 102, 241, 0.14);
+  border-color: rgba(129, 140, 248, 0.35);
+}
+.dark-theme .leo-guide-box .leo-guide-title { color: #c7d2fe; }
+.dark-theme .leo-guide-box .leo-guide-example { color: #a1a1aa; }
+.dark-theme .leo-guide-box .leo-guide-warning { color: #fb7185; }
+
+/* ==================== НАСТРОЙКИ (иконка шестерёнки вверху) ==================== */
+#leoSettingsModal {
+  z-index: 210;
+}
+.leo-time-input {
+  font-variant-numeric: tabular-nums;
+}
+/* ==================== LEO GUIDE BOX (подсказка к миссии) ==================== */
+.leo-guide-box {
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+}
+.leo-guide-box .leo-guide-instruction { color: #3730a3; font-weight: 700; }
+.leo-guide-box .leo-guide-example { color: #475569; font-style: italic; }
+.leo-guide-box .leo-guide-warning { color: #be123c; font-weight: 700; }
+
+.dark-theme .leo-guide-box {
+  background: #1e1b4b;
+  border: 1px solid #4338ca;
+}
+.dark-theme .leo-guide-box .leo-guide-instruction { color: #a5b4fc; }
+.dark-theme .leo-guide-box .leo-guide-example { color: #cbd5e1; }
+.dark-theme .leo-guide-box .leo-guide-warning { color: #fb7185; }
